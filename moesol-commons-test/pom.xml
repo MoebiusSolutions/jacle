@@ -17,7 +17,6 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>moesol-commons</artifactId>
 			<version>${project.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
