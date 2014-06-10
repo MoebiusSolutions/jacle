@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.moesol.common.moesolcommons.io.RuntimeIOException;
+
 public class ExceptionExtTest {
 
 	@Test

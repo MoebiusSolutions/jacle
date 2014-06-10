@@ -1,7 +1,9 @@
-package com.moesol.common.moesolcommons.lang;
+package com.moesol.common.moesolcommons.io;
 
 
 import java.io.IOException;
+
+import com.moesol.common.moesolcommons.lang.ExceptionExt;
 
 /**
  * A runtime variant of {@link IOException}

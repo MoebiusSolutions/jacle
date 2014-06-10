@@ -3,8 +3,6 @@ package com.moesol.common.moesolcommons.io;
 import java.io.File;
 import java.io.IOException;
 
-import com.moesol.common.moesolcommons.lang.RuntimeIOException;
-
 /**
  * Provides extensions to {@link com.google.common.io.Files}
  * 

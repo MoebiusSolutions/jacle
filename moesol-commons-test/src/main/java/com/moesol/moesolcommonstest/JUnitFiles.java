@@ -4,8 +4,8 @@ import java.io.File;
 import java.nio.file.Files;
 
 import com.moesol.common.moesolcommons.io.FilesExt;
+import com.moesol.common.moesolcommons.io.RuntimeIOException;
 import com.moesol.common.moesolcommons.lang.JavaUtil;
-import com.moesol.common.moesolcommons.lang.RuntimeIOException;
 
 public class JUnitFiles {
 	
