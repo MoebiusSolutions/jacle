@@ -83,7 +83,7 @@ Update the release notes in the README.md file:
 
 Push changes to the server:
 
-    $ git push -u origin release-1.2
+    $ git push origin release-1.0
 
 Run a build of the branch on the server:
 
@@ -106,13 +106,14 @@ Update versions in pom files and pushs:
 
 Finally, deploy the following files from the build to Artifactory:
 
-    jacle-commons-1.0.jar
     jacle-commons-1.0.pom
-    jacle-commons-test-1.0.jar
+    jacle-commons-1.0.jar
+    jacle-commons-1.0-sources.jar
     jacle-commons-test-1.0.pom
+    jacle-commons-test-1.0-sources.jar
 
 ## Revision History
 
-### jacle-1.0-SNAPSHOT
+### jacle-1.0
 
 *   Initial open source release
