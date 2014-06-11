@@ -83,7 +83,7 @@ Update the release notes in the README.md file:
 
 Push changes to the server:
 
-    $ git push -u origin release-1.0
+    $ git push origin release-1.0
 
 Run a build of the branch on the server:
 
