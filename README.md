@@ -121,7 +121,7 @@ Push everything to the server (note: I think we can skip some of this with the "
 
 ## Revision History
 
-### moesol-commons-1.3-SNAPSHOT
+### moesol-commons-1.3
 
 *   Added README.md with release process and revision history
 
