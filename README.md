@@ -104,6 +104,13 @@ Update versions in pom files and pushs:
     $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
     $ git push
 
+Finally, deploy the following files from the build to Artifactory:
+
+    moesol-commons-1.3.jar
+    moesol-commons-1.3.pom
+    moesol-commons-test-1.3.jar
+    moesol-commons-test-1.3.pom
+
 ## Revision History
 
 ### moesol-commons-1.3
