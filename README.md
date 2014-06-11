@@ -110,6 +110,7 @@ Finally, deploy the following files from the build server to Artifactory:
     jacle-commons-1.0.jar
     jacle-commons-1.0-sources.jar
     jacle-commons-test-1.0.pom
+    jacle-commons-test-1.0.jar
     jacle-commons-test-1.0-sources.jar
 
 ## License
