@@ -105,3 +105,23 @@ Push everything to the server (note: I think we can skip this with the "-p" opti
     
     # Delete the release branch from the server
     git push origin :release-1.0
+
+## Revision History
+
+### moesol-commons-1.3-SNAPSHOT
+
+*   Added README.md with release process
+*   Added revision-history.md
+
+### moesol-commons-1.2
+
+*   First Release
+
+### moesol-commons-1.1
+
+*   Just fussing with git-flow
+
+### moesol-commons-1.0
+
+*   Just fussing with git-flow
+
