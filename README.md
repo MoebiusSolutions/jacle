@@ -106,10 +106,10 @@ Update versions in pom files and pushs:
 
 Finally, deploy the following files from the build to Artifactory:
 
-    commons-1.0.jar
-    commons-1.0.pom
-    commons-test-1.0.jar
-    commons-test-1.0.pom
+    jacle-commons-1.0.jar
+    jacle-commons-1.0.pom
+    jacle-commons-test-1.0.jar
+    jacle-commons-test-1.0.pom
 
 ## Revision History
 
