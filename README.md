@@ -91,33 +91,18 @@ Run a build of the branch on the server:
 
 Repeatedly commit, push, and build until the build is stable.
 
-Finish the release (ending the release branch and tagging a release). When prompted, enter release notes.
+Finish the release, and push to the server (when prompted, enter release notes):
 
     $ git flow release finish -p 1.0
 
 (now on the "develop" branch)
 
-Update versions in pom files:
+Update versions in pom files and pushs:
 
     $ mvn versions:set -DgenerateBackupPoms=false -DnewVersion=1.1-SNAPSHOT
     $ git add -A :/
     $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
-
-Push everything to the server (note: I think we can skip some of this with the "-p" option above, but it needs verification on the next release):
-
-    # Push the master branch (now has latest release)
-    git checkout master
-    git push -u origin master
-    
-    # Push the develop branch (now has any merged changes from the release branch)
-    git checkout develop
-    git push -u origin develop
-    
-    # Push the release tag
-    git push -u origin moesol-commons-1.0
-    
-    # Delete the release branch from the server
-    git push origin :release-1.0
+    $ git push
 
 ## Revision History
 
