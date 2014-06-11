@@ -65,6 +65,7 @@
 
 	<build>
 		<plugins>
+
 			<!-- Sets JDK/JRE compliance level-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -75,6 +76,21 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+		
+			<!-- Builds sources-jar for easy viewing in IDEs -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

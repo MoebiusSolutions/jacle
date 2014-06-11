@@ -30,4 +30,24 @@
 
 	</dependencies>
 
+	<build>
+		<plugins>
+
+			<!-- Disable sources-jar since we have no main sources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<!-- Disabled by setting no phase -->
+						<phase/>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
 </project>
