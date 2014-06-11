@@ -53,7 +53,7 @@ The be sure to "git flow init" your local repo, which populates your ".git/confi
     Release branches? [release-]
     Hotfix branches? [hotfix-]
     Support branches? [support/]
-    Version tag prefix? [jacle-]
+    Version tag prefix? [v]
 
 ### Performing a Release
 
