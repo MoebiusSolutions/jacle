@@ -104,7 +104,7 @@ Update versions in pom files and pushs:
     $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
     $ git push
 
-Finally, deploy the following files from the build to Artifactory:
+Finally, deploy the following files from the build server to Artifactory:
 
     jacle-commons-1.0.pom
     jacle-commons-1.0.jar
