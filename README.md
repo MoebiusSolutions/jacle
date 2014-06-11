@@ -113,6 +113,6 @@ Finally, deploy the following files from the build to Artifactory:
 
 ## Revision History
 
-### jacle-1.0-SNAPSHOT
+### jacle-1.0
 
 *   Initial open source release
