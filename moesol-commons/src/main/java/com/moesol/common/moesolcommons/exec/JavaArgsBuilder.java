@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.common.base.Strings;
+
 /**
  * Builds the command line necessary to launch java processes using
  * approximately the same classpath as the active classloader
@@ -30,6 +32,7 @@ public class JavaArgsBuilder {
 	 * added as "-Dkey=value".
 	 */
 	private Map<String, String> systemProperties = new HashMap<String, String>();
+	private boolean doFullyQualify;
 
 	/**
 	 * Used to build a the command line necessary to execute a java process
@@ -113,11 +116,25 @@ public class JavaArgsBuilder {
 	}
 
 	/**
+	 * Specifies Whether the builder should apped a fully qualified path to the
+	 * java executable if available (from the JAVA_HOME env variable). Defaults
+	 * to false.
+	 */
+	public JavaArgsBuilder setFullyQualifiedPath(boolean doFullyQualify) {
+		this.doFullyQualify = doFullyQualify;
+		return this;
+	}
+
+	/**
 	 * Returns the command line
 	 */
 	public String[] build() {
 		LinkedList<String> cmd = new LinkedList<String>();
-		cmd.add("java");
+		if (doFullyQualify) {
+			cmd.add(getFullyQualifiedExectuable());
+		} else {
+			cmd.add("java");
+		}
 		if (this.initialJvmMB != null) {
 			cmd.add("-Xms"+this.initialJvmMB+"m");
 		}
@@ -160,5 +177,13 @@ public class JavaArgsBuilder {
 		  classpath.append(System.getProperty("path.separator"));
 		}
 		return classpath.toString();
+	}
+	
+	private String getFullyQualifiedExectuable() {
+		String javaHome = System.getenv("JAVA_HOME");
+		if (Strings.isNullOrEmpty(javaHome)) {
+			return "java";
+		}
+		return new File(javaHome, "bin/java").toString();
 	}
 }
