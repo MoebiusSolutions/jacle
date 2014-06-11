@@ -67,14 +67,19 @@ Begin the release process (on a new release branch), where "1.0" is your target 
 
     $ git flow release start 1.0
 
+(now on the "release-1.0" branch)
+
 Update versions in pom files:
 
     $ mvn versions:set -DgenerateBackupPoms=false -DnewVersion=1.0
-
-Review changes and commmit:
-
     $ git add -A :/
     $ git commit -m 'Rolling version to 1.0'
+
+Update the release notes in the README.md file:
+
+    $ vi README.md
+    $ git add README.md
+    $ git commit -m 'Updated release notes'
 
 Push changes to the server:
 
@@ -90,7 +95,15 @@ Finish the release (ending the release branch and tagging a release). When promp
 
     $ git flow release finish -p 1.0
 
-Push everything to the server (note: I think we can skip this with the "-p" option above, but it needs verification on the next release):
+(now on the "develop" branch)
+
+Update versions in pom files:
+
+    $ mvn versions:set -DgenerateBackupPoms=false -DnewVersion=1.1-SNAPSHOT
+    $ git add -A :/
+    $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
+
+Push everything to the server (note: I think we can skip some of this with the "-p" option above, but it needs verification on the next release):
 
     # Push the master branch (now has latest release)
     git checkout master
@@ -110,8 +123,7 @@ Push everything to the server (note: I think we can skip this with the "-p" opti
 
 ### moesol-commons-1.3-SNAPSHOT
 
-*   Added README.md with release process
-*   Added revision-history.md
+*   Added README.md with release process and revision history
 
 ### moesol-commons-1.2
 
