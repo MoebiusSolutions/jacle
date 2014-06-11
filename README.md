@@ -87,7 +87,7 @@ Push changes to the server:
 
 Run a build of the branch on the server:
 
-*   We have a [jacle branch](https://build.moesol.com/jenkins/job/jacle%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
+*   We have a [jacle branch](https://build.moesol.com/jenkins/job/jacle-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
 
 Repeatedly commit, push, and build until the build is stable.
 
