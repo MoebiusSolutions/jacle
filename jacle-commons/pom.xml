@@ -11,6 +11,15 @@
 	<name>JACLE Utility Library</name>
 	<url>https://github.com/MoebiusSolutions/jacle</url>
 
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+
 	<dependencies>
 
 		<!-- Google's enhancements to the standard java libraries -->
