@@ -5,23 +5,23 @@
 This is a common base library with minimum dependencies. Think Google's Guava. The modules include:
 
 __moesol-commons__
-* The main base library
+*   The main base library
 
 __moesol-commons-test__
-* A library specifically intended for use in unit testing (to be included at "test" scope)
+*   A library specifically intended for use in unit testing (to be included at "test" scope)
 
 __moesol-commons-testing__
-* The unit tests for moesol-commons (happens to use moesol-commons-test, so it was broken out)
+*   The unit tests for moesol-commons (happens to use moesol-commons-test, so it was broken out)
 
 ## Branches and Releases
 
 Important points:
-* The main work-in-progress branch is "develop", __not__ "master", this is the convention of git-flow.
-* This project uses __git-flow__, with default settings, except that release tags are prefixed with "moesol-commons-".
+*   The main work-in-progress branch is "develop", __not__ "master", this is the convention of git-flow.
+*   This project uses __git-flow__, with default settings, except that release tags are prefixed with "moesol-commons-".
 
 Here's a quick overview of the branching pattern:
-* [http://nvie.com/posts/a-successful-git-branching-model/](http://nvie.com/posts/a-successful-git-branching-model/)
-* Note, ignore the commands in this overview. The git-flow tool automates much of this.
+*   [http://nvie.com/posts/a-successful-git-branching-model/](http://nvie.com/posts/a-successful-git-branching-model/)
+*    Note, ignore the commands in this overview. The git-flow tool automates much of this.
 
 ## Release Process
 
@@ -76,7 +76,7 @@ Push changes to the server:
     $ git push -u origin release-1.2
 
 Run a build of the branch on the server:
-* We have a [moesol-commons release](https://build.moesol.com/jenkins/job/moesol-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0")
+*   We have a [moesol-commons release](https://build.moesol.com/jenkins/job/moesol-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0")
 
 Repeatedly commit, push, and build until the build is stable.
 
