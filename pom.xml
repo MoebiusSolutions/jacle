@@ -2,25 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.moesol.common</groupId>
-	<artifactId>moesol-commons-parent</artifactId>
+	<groupId>jacle</groupId>
+	<artifactId>jacle-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4-SNAPSHOT</version>
-	<name>Moebius Solutions, Inc. Commons Parent POM</name>
+	<version>1.0-SNAPSHOT</version>
+	<name>JACLE Parent POM</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>moesol</id>
-			<url>https://artifactory.moesol.com/artifactory/repo</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<!--
 		Define versions/scope of dependencies for sub-modules
@@ -56,6 +46,9 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<!--
+		Defines dependencies to be included in all child modules
+	-->
 	<dependencies>
 
 		<!-- Standard unit testing modules -->
@@ -87,13 +80,13 @@
 
 	<modules>
 		<!--
-			NOTE: The unit tests for moesol-commons are in moesol-commons-testing.
-			The module is broken in two so that moesol-commons-test can be used write the unit tests,
-			and moesol-commons-test can use moesol-commons.
+			NOTE: The unit tests for commons are in commons-unit-tests.
+			The module is broken in two so that commons-test can be used write the unit tests,
+			and commons-test can use commons.
 		-->
-		<module>moesol-commons</module>
-		<module>moesol-commons-test</module>
-		<module>moesol-commons-testing</module>
+		<module>jacle-commons</module>
+		<module>jacle-commons-test</module>
+		<module>jacle-commons-unit-tests</module>
 	</modules>
 
 </project>

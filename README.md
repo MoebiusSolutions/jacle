@@ -1,27 +1,27 @@
-# moesol-commons
+# Just Another Commons Library, Eh? (JACLE)
 
 ## Overview
 
-This is a common base library with minimum dependencies. Think Google's Guava. The modules include:
+This is a common base library with minimum dependencies that augments the basic JDK. Think Google's Guava. The modules include:
 
-__moesol-commons__
+__commons__
 
 *   The main base library
 
-__moesol-commons-test__
+__commons-test__
 
 *   A library specifically intended for use in unit testing (to be included at "test" scope)
 
-__moesol-commons-testing__
+__commons-unit-tests__
 
-*   The unit tests for moesol-commons (happens to use moesol-commons-test, so it was broken out)
+*   The unit tests for commons (happens to use commons-test, so it was broken out). This is not intended for consumption by other products.
 
 ## Branches and Releases
 
 Important points:
 
 *   The main work-in-progress branch is "develop", __not__ "master", this is the convention of git-flow.
-*   This project uses __git-flow__, with default settings, except that release tags are prefixed with "moesol-commons-".
+*   This project uses __git-flow__, with default settings, except that release tags are prefixed with "jacle-".
 
 Here's a quick overview of the branching pattern:
 
@@ -53,7 +53,7 @@ The be sure to "git flow init" your local repo, which populates your ".git/confi
     Release branches? [release-]
     Hotfix branches? [hotfix-]
     Support branches? [support/]
-    Version tag prefix? [moesol-commons-]
+    Version tag prefix? [jacle-]
 
 ### Performing a Release
 
@@ -87,7 +87,7 @@ Push changes to the server:
 
 Run a build of the branch on the server:
 
-*   We have a [moesol-commons release](https://build.moesol.com/jenkins/job/moesol-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0")
+*   We have a [jacle branch](https://build.moesol.com/jenkins/job/jacle%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
 
 Repeatedly commit, push, and build until the build is stable.
 
@@ -106,26 +106,13 @@ Update versions in pom files and pushs:
 
 Finally, deploy the following files from the build to Artifactory:
 
-    moesol-commons-1.3.jar
-    moesol-commons-1.3.pom
-    moesol-commons-test-1.3.jar
-    moesol-commons-test-1.3.pom
+    commons-1.0.jar
+    commons-1.0.pom
+    commons-test-1.0.jar
+    commons-test-1.0.pom
 
 ## Revision History
 
-### moesol-commons-1.3
+### jacle-1.0-SNAPSHOT
 
-*   Added README.md with release process and revision history
-
-### moesol-commons-1.2
-
-*   First Release
-
-### moesol-commons-1.1
-
-*   Just fussing with git-flow
-
-### moesol-commons-1.0
-
-*   Just fussing with git-flow
-
+*   Initial open source release

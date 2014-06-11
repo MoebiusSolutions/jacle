@@ -1,0 +1,29 @@
+package jacle.common.io;
+
+import java.io.Closeable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Provides extensions to {@link com.google.common.io.Closeables}
+ * 
+ * @author rkenney
+ */
+public class CloseablesExt {
+
+	 private static final Logger LOGGER = Logger.getLogger(CloseablesExt.class.getName());
+
+	/**
+	 * Closes the provided {@link Closeable}, swallowing/logging any exception
+	 **/
+	public static void closeQuietly(Closeable closeable) {
+		if (null == closeable) {
+			return;
+		}
+		try {
+			closeable.close();
+		} catch (Exception e) {
+			LOGGER.log(Level.WARNING, "Failed to close Closeable", e);
+		}
+	}
+}
