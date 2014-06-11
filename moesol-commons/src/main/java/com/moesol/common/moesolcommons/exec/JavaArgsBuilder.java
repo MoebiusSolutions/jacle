@@ -173,7 +173,7 @@ public class JavaArgsBuilder {
 	private static String getCurrentClasspath() {
 		StringBuilder classpath = new StringBuilder ();
 		for (URL url : ((URLClassLoader) (Thread.currentThread() .getContextClassLoader())).getURLs()) {
-		  classpath.append(new File(url.getPath()));
+		  classpath.append(new File(url.getPath().replaceAll("\\%20", " ")));
 		  classpath.append(System.getProperty("path.separator"));
 		}
 		return classpath.toString();
