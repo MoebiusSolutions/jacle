@@ -38,7 +38,7 @@ public class SystemOptionTest {
 		File stderr = files.getFile("stderr.txt");
 		String key = "my_mock_option";
 		HashMap<String, String> env = new HashMap<String, String>();
-		String[] cmd = new JavaArgsBuilder(SystemOptionMockProcess.class).setArgs(key, "not defined").build();
+		String[] cmd = newProcArgsBuilder().setArgs(key, "not defined").build();
 		executeProcess(cmd, stdout, stderr, env);
 		assertEquals("not defined", SystemOptionMockProcess.readValueOutput(stdout, key));
 	}
@@ -49,7 +49,7 @@ public class SystemOptionTest {
 		File stderr = files.getFile("stderr.txt");
 		String key = "my_mock_option";
 		HashMap<String, String> env = new HashMap<String, String>();
-		String[] cmd = new JavaArgsBuilder(SystemOptionMockProcess.class).addJavaProperty(key, "from java property").setArgs(key, "not defined").build();
+		String[] cmd = newProcArgsBuilder().addJavaProperty(key, "from java property").setArgs(key, "not defined").build();
 		executeProcess(cmd, stdout, stderr, env);
 		assertEquals("from java property", SystemOptionMockProcess.readValueOutput(stdout, key));
 	}
@@ -61,7 +61,7 @@ public class SystemOptionTest {
 		String key = "my_mock_option";
 		HashMap<String, String> env = new HashMap<String, String>();
 		env.put(key, "from environment");
-		String[] cmd = new JavaArgsBuilder(SystemOptionMockProcess.class).setArgs(key, "not defined").build();
+		String[] cmd = newProcArgsBuilder().setArgs(key, "not defined").build();
 		executeProcess(cmd, stdout, stderr, env);
 		assertEquals("from environment", SystemOptionMockProcess.readValueOutput(stdout, key));
 	}
@@ -73,7 +73,7 @@ public class SystemOptionTest {
 		String key = "my_mock_option";
 		HashMap<String, String> env = new HashMap<String, String>();
 		env.put(key, "from environment");
-		String[] cmd = new JavaArgsBuilder(SystemOptionMockProcess.class).addJavaProperty(key, "from java property").setArgs(key, "not defined").build();
+		String[] cmd = newProcArgsBuilder().addJavaProperty(key, "from java property").setArgs(key, "not defined").build();
 		executeProcess(cmd, stdout, stderr, env);
 		assertEquals("from java property", SystemOptionMockProcess.readValueOutput(stdout, key));
 	}
@@ -84,7 +84,7 @@ public class SystemOptionTest {
 		File stderr = files.getFile("stderr.txt");
 		String key = "my_mock_option";
 		HashMap<String, String> env = new HashMap<String, String>();
-		String[] cmd = new JavaArgsBuilder(SystemOptionMockProcess.class).addJavaProperty(key, "").setArgs(key, "not defined").build();
+		String[] cmd = newProcArgsBuilder().addJavaProperty(key, "").setArgs(key, "not defined").build();
 		executeProcess(cmd, stdout, stderr, env);
 		assertEquals("", SystemOptionMockProcess.readValueOutput(stdout, key));
 	}
@@ -96,7 +96,7 @@ public class SystemOptionTest {
 		String key = "my_mock_option";
 		HashMap<String, String> env = new HashMap<String, String>();
 		env.put(key, "");
-		String[] cmd = new JavaArgsBuilder(SystemOptionMockProcess.class).setArgs(key, "not defined").build();
+		String[] cmd = newProcArgsBuilder().setArgs(key, "not defined").build();
 		executeProcess(cmd, stdout, stderr, env);
 		assertEquals("", SystemOptionMockProcess.readValueOutput(stdout, key));
 	}
@@ -114,5 +114,9 @@ public class SystemOptionTest {
 			System.out.println(Files.toString(stderr, StandardCharsets.UTF_8));
 		}
 		Assert.assertEquals(0, exit);
+	}
+	
+	private JavaArgsBuilder newProcArgsBuilder() {
+		return new JavaArgsBuilder(SystemOptionMockProcess.class).setFullyQualifiedPath(true);
 	}
 }
