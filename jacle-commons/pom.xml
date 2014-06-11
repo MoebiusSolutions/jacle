@@ -9,6 +9,7 @@
 	</parent>
 	<artifactId>jacle-commons</artifactId>
 	<name>JACLE Utility Library</name>
+	<url>https://github.com/MoebiusSolutions/jacle</url>
 
 	<dependencies>
 

@@ -9,6 +9,7 @@
 	</parent>
 	<artifactId>jacle-commons-unit-tests</artifactId>
 	<name>JACLE Commons Unit Tests</name>
+	<url>https://github.com/MoebiusSolutions/jacle</url>
 
 	<dependencies>
 

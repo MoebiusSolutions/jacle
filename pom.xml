@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<version>1.0</version>
 	<name>JACLE Parent POM</name>
+	<url>https://github.com/MoebiusSolutions/jacle</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
