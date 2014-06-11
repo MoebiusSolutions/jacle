@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.moesol.common</groupId>
 		<artifactId>moesol-commons-parent</artifactId>
-		<version>1.2</version>
+		<version>1.3</version>
 	</parent>
 	<artifactId>moesol-commons-test</artifactId>
 	<name>Moebius Solutions, Inc. Testing Lib</name>
