@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>jacle</groupId>
+		<artifactId>jacle-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>jacle-commons-unit-tests</artifactId>
+	<name>JACLE Commons Unit Tests</name>
+	<url>https://github.com/MoebiusSolutions/jacle</url>
+
+	<dependencies>
+
+		<!-- The library under test -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jacle-commons</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Unit testing helper library-->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jacle-commons-test</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<!-- Disable sources-jar since we have no main sources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<!-- Disabled by setting no phase -->
+						<phase/>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+</project>

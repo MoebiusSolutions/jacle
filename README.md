@@ -1,27 +1,27 @@
-# moesol-commons
+# Just Another Commons Library, Eh? (JACLE)
 
 ## Overview
 
-This is a common base library with minimum dependencies. Think Google's Guava. The modules include:
+This is a common base library with minimum dependencies that augments the basic JDK. Think Google's Guava. The modules include:
 
-__moesol-commons__
+__commons__
 
 *   The main base library
 
-__moesol-commons-test__
+__commons-test__
 
 *   A library specifically intended for use in unit testing (to be included at "test" scope)
 
-__moesol-commons-testing__
+__commons-unit-tests__
 
-*   The unit tests for moesol-commons (happens to use moesol-commons-test, so it was broken out)
+*   The unit tests for commons (happens to use commons-test, so it was broken out). This is not intended for consumption by other products.
 
 ## Branches and Releases
 
 Important points:
 
 *   The main work-in-progress branch is "develop", __not__ "master", this is the convention of git-flow.
-*   This project uses __git-flow__, with default settings, except that release tags are prefixed with "moesol-commons-".
+*   This project uses __git-flow__, with default settings, except that release tags are prefixed with "jacle-".
 
 Here's a quick overview of the branching pattern:
 
@@ -53,7 +53,7 @@ The be sure to "git flow init" your local repo, which populates your ".git/confi
     Release branches? [release-]
     Hotfix branches? [hotfix-]
     Support branches? [support/]
-    Version tag prefix? [moesol-commons-]
+    Version tag prefix? [v]
 
 ### Performing a Release
 
@@ -83,57 +83,37 @@ Update the release notes in the README.md file:
 
 Push changes to the server:
 
-    $ git push -u origin release-1.2
+    $ git push origin release-1.0
 
 Run a build of the branch on the server:
 
-*   We have a [moesol-commons release](https://build.moesol.com/jenkins/job/moesol-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0")
+*   We have a [jacle branch](https://build.moesol.com/jenkins/job/jacle-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
 
 Repeatedly commit, push, and build until the build is stable.
 
-Finish the release (ending the release branch and tagging a release). When prompted, enter release notes.
+Finish the release, and push to the server (when prompted, enter release notes):
 
     $ git flow release finish -p 1.0
 
 (now on the "develop" branch)
 
-Update versions in pom files:
+Update versions in pom files and pushs:
 
     $ mvn versions:set -DgenerateBackupPoms=false -DnewVersion=1.1-SNAPSHOT
     $ git add -A :/
     $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
+    $ git push
 
-Push everything to the server (note: I think we can skip some of this with the "-p" option above, but it needs verification on the next release):
+Finally, deploy the following files from the build to Artifactory:
 
-    # Push the master branch (now has latest release)
-    git checkout master
-    git push -u origin master
-    
-    # Push the develop branch (now has any merged changes from the release branch)
-    git checkout develop
-    git push -u origin develop
-    
-    # Push the release tag
-    git push -u origin moesol-commons-1.0
-    
-    # Delete the release branch from the server
-    git push origin :release-1.0
+    jacle-commons-1.0.pom
+    jacle-commons-1.0.jar
+    jacle-commons-1.0-sources.jar
+    jacle-commons-test-1.0.pom
+    jacle-commons-test-1.0-sources.jar
 
 ## Revision History
 
-### moesol-commons-1.3
+### jacle-1.0
 
-*   Added README.md with release process and revision history
-
-### moesol-commons-1.2
-
-*   First Release
-
-### moesol-commons-1.1
-
-*   Just fussing with git-flow
-
-### moesol-commons-1.0
-
-*   Just fussing with git-flow
-
+*   Initial open source release
