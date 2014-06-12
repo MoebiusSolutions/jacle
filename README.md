@@ -106,6 +106,7 @@ Update versions in pom files and pushs:
 
 Finally, deploy the following files from the build server to Artifactory:
 
+    jacle-parent-1.0.pom
     jacle-commons-1.0.pom
     jacle-commons-1.0.jar
     jacle-commons-1.0-sources.jar
