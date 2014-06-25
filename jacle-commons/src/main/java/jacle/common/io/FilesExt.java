@@ -93,4 +93,23 @@ public class FilesExt {
 			throw new RuntimeIOException(String.format("Failed to delete file [%s]", file));
 		}
 	}
+
+	/**
+	 * Creates the specific directory and all of its parents. Does not throw an
+	 * exception if the file already doesn't exist.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static void mkdirs(File dir) throws RuntimeIOException {
+		if (dir.exists()) {
+			if (dir.isDirectory()) {
+				return;
+			} else {
+				throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
+			}
+		}
+		if (!dir.mkdirs()) {
+			throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
+		}
+	}
 }

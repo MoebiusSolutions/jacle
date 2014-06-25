@@ -3,6 +3,8 @@ package jacle.common.lang;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.CharMatcher;
+
 /**
  * Default implementation of {@link JavaUtil}
  * 
@@ -10,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class JavaUtilImpl implements JavaUtil {
 
-	private static final Pattern CLASS_NAME_PATTERN = Pattern.compile("([a-z][a-z0-9_]*\\.)*([A-Z][a-zA-Z0-9\\$_]*)");
+	private static final Pattern CLASS_NAME_PATTERN = Pattern.compile("(([a-z][a-z0-9_]*\\.)*)([A-Z][a-zA-Z0-9\\$_]*)");
 
 	@Override
 	public String getClassName() {
@@ -33,11 +35,26 @@ public class JavaUtilImpl implements JavaUtil {
 		if (!matcher.matches()) {
 			return fullyQualifiedName;
 		}
-		return matcher.group(2);
+		return matcher.group(3);
 	}
 
 	@Override
 	public String getMethodName() {
 		return Thread.currentThread().getStackTrace()[2].getMethodName();
+	}
+
+	@Override
+	public String getPackageName() {
+		return getPackageName(Thread.currentThread().getStackTrace()[2].getClassName());
+	}
+
+	@Override
+	public String getPackageName(String fullyQualifiedName) {
+		Matcher matcher = CLASS_NAME_PATTERN.matcher(fullyQualifiedName);
+		if (!matcher.matches()) {
+			return fullyQualifiedName;
+		}
+		String packag = matcher.group(1);
+		return CharMatcher.is('.').trimTrailingFrom(packag);
 	}
 }

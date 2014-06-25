@@ -59,4 +59,18 @@ public interface JavaUtil {
 	 * even from static contexts.
 	 */
 	public String getMethodName();
+
+	/**
+	 * Returns the package name of the calling method.</p>
+	 */
+	public String getPackageName();
+
+	/**
+	 * Returns the package name parsed from the provided fully qualified class
+	 * name.</p>
+	 * 
+	 * If the provided string does not match the format of a fully qualified
+	 * class name, the original string is returned.</p>
+	 */
+	public String getPackageName(String fullyQualifiedName);
 }
