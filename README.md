@@ -132,7 +132,7 @@ Finally, deploy the following files from the build server to Artifactory:
 
 ## Revision History
 
-### jacle-1.1-SNAPSHOT
+### jacle-1.1
 
 * Added:
 ** FilesExt.mkdirs()
