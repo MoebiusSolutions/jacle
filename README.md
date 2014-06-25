@@ -132,6 +132,13 @@ Finally, deploy the following files from the build server to Artifactory:
 
 ## Revision History
 
+### jacle-1.1-SNAPSHOT
+
+* Added:
+** FilesExt.mkdirs()
+** JavaUtil.getPackageName()
+** SystemOption.getFile()
+
 ### jacle-1.0
 
 *   Initial open source release
