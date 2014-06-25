@@ -2,7 +2,6 @@ package jacle.common.lang;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import jacle.common.lang.JavaUtil;
 
 import java.util.regex.Pattern;
 
@@ -151,17 +150,81 @@ public class JavaUtilTest {
 	public void testGetSimpleClassName_FromString() {
 		JavaUtil util = JavaUtil.I;
 		// Standard format
-		assertEquals("SomeClass", util.getSimpleClassName("com.scea.SomeClass"));
+		assertEquals("SomeClass", util.getSimpleClassName("jacle.common.SomeClass"));
 		// Already simple
 		assertEquals("SomeClass", util.getSimpleClassName("SomeClass"));
 		// Includes numbers and symbols
-		assertEquals("Some_Class9", util.getSimpleClassName("com.scea.number9.symbol_.Some_Class9"));
+		assertEquals("Some_Class9", util.getSimpleClassName("jacle.common.number9.symbol_.Some_Class9"));
 		// Not a valid class name
 		assertEquals("some random invalid string", util.getSimpleClassName("some random invalid string"));
 		// Named inner class
-		assertEquals("WrapperClass$SomeClass", util.getSimpleClassName("com.scea.WrapperClass$SomeClass"));
+		assertEquals("WrapperClass$SomeClass", util.getSimpleClassName("jacle.common.WrapperClass$SomeClass"));
 		// Anonymous inner class
-		assertEquals("WrapperClass$1", util.getSimpleClassName("com.scea.WrapperClass$1"));
+		assertEquals("WrapperClass$1", util.getSimpleClassName("jacle.common.WrapperClass$1"));
+	}
+
+	/**
+	 * Verifies that the {@link JavaUtil#getPackageName()} method returns a
+	 * proper value from the following contexts:
+	 * <ul>
+	 * <li>Static method</li>
+	 * <li>Instance method</li>
+	 * <li>Nested instance method</li>
+	 * <li>Anonymous inner class method</li>
+	 * </ul>
+	 */
+	@Test
+	public void testGetPackageName() {
+		JavaUtil util = JavaUtil.I;
+		MockAltInterface anon = new MockAltInterface(){
+			public String getFromAnonymousClass(JavaUtil util) {
+				return util.getPackageName();
+			}
+		};
+		assertEquals("jacle.common.lang", MockSimplePackageNameGetter.getFromStatic(util));
+		assertEquals("jacle.common.lang", new MockSimplePackageNameGetter().getFromMemberMethod(util));
+		assertEquals("jacle.common.lang", new MockSimplePackageNameGetter().getFromNestedMethod(util));
+		assertEquals("jacle.common.lang", anon.getFromAnonymousClass(util));
+	}
+
+	private static class MockSimplePackageNameGetter {
+
+		public static String getFromStatic(JavaUtil util) {
+			return util.getPackageName();
+		}
+
+		public String getFromMemberMethod(JavaUtil util) {
+			return util.getPackageName();
+		}
+
+		public String getFromNestedMethod(JavaUtil util) {
+			return nestedMethod(util);
+		}
+
+		private String nestedMethod(JavaUtil util) {
+			return util.getPackageName();
+		}
+	}
+
+	/**
+	 * Verifies that the {@link JavaUtil#getPackageName(String)} method returns a
+	 * proper value from different name formats
+	 */
+	@Test
+	public void testGetPackageName_FromString() {
+		JavaUtil util = JavaUtil.I;
+		// Standard format
+		assertEquals("jacle.common", util.getPackageName("jacle.common.SomeClass"));
+		// Already simple
+		assertEquals("", util.getPackageName("SomeClass"));
+		// Includes numbers and symbols
+		assertEquals("jacle.common.number9.symbol_", util.getPackageName("jacle.common.number9.symbol_.Some_Class9"));
+		// Not a valid class name
+		assertEquals("some random invalid string", util.getPackageName("some random invalid string"));
+		// Named inner class
+		assertEquals("jacle.common", util.getPackageName("jacle.common.WrapperClass$SomeClass"));
+		// Anonymous inner class
+		assertEquals("jacle.common", util.getPackageName("jacle.common.WrapperClass$1"));
 	}
 
 	private static interface MockAltInterface {
