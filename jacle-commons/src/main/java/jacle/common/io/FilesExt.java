@@ -1,7 +1,12 @@
 package jacle.common.io;
 
+import jacle.common.io.nio.ListFilePathVisitRecorder;
+import jacle.common.io.nio.ListFileVisitRecorder;
+import jacle.common.io.nio.RecordingFileVisitor;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Provides extensions to {@link com.google.common.io.Files}
@@ -110,6 +115,38 @@ public class FilesExt {
 		}
 		if (!dir.mkdirs()) {
 			throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
+		}
+	}
+
+	/**
+	 * Returns a list of all files under the specified directory. Sub directories
+	 * are walked, but directories are not included in the result.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static List<File> listAllFiles(File dir) throws RuntimeIOException {
+		ListFileVisitRecorder listCollector = new ListFileVisitRecorder();
+		try {
+			java.nio.file.Files.walkFileTree(dir.toPath(), new RecordingFileVisitor(listCollector).setRequireIsFile());
+			return listCollector.getFiles();
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Filed to list files in [%s].", dir));
+		}
+	}
+
+	/**
+	 * Returns a list of all files under the specified directory. Sub directories
+	 * are walked, but directories are not included in the result.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static List<String> listAllFilePaths(File dir) throws RuntimeIOException {
+		ListFilePathVisitRecorder listCollector = new ListFilePathVisitRecorder();
+		try {
+			java.nio.file.Files.walkFileTree(dir.toPath(), new RecordingFileVisitor(listCollector).setRequireIsFile());
+			return listCollector.getPaths();
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Filed to list files in [%s].", dir));
 		}
 	}
 }
