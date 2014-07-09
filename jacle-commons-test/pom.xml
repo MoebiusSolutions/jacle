@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>jacle</groupId>
 		<artifactId>jacle-parent</artifactId>
-		<version>1.1</version>
+		<version>1.2</version>
 	</parent>
 	<artifactId>jacle-commons-test</artifactId>
 	<name>JACLE Testing Utilities</name>
@@ -27,6 +27,14 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jacle-commons</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Standard unit testing library -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<!-- This library is intended as scope TEST, so our test dependencies are scope COMPILE -->
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>
