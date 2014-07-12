@@ -132,12 +132,18 @@ Finally, deploy the following files from the build server to Artifactory:
 
 ## Revision History
 
+### jacle-1.3
+
+* Added:
+    * RemoteThrowableSerializer
+    * Gson dependency 
+
 ### jacle-1.2
 
 * Added:
-    * Added AssertExt and AssertList
-    * Added StringsExt
-    * Added junit dependency to jacle-commons-test
+    * AssertExt and AssertList
+    * StringsExt
+    * junit dependency to jacle-commons-test
 
 ### jacle-1.1
 
