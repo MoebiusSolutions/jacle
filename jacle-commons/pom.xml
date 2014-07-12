@@ -28,6 +28,12 @@
 			<artifactId>guava</artifactId>
 		</dependency>
 
+		<!-- JSON reader/writer library -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+
 	</dependencies>
 
 </project>
