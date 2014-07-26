@@ -8,7 +8,7 @@ import java.io.IOException;
  * 
  * @author rkenney
  */
-// TODO [RK] C2SS-REF: Remove other instances of this from otm
+// TODO [RK] JACLE: Remove other instances of this from otm
 public class ExceptionExt {
 
 	/**

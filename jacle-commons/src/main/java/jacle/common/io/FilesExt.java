@@ -1,7 +1,11 @@
 package jacle.common.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+
+import com.google.common.io.Files;
 
 /**
  * Provides extensions to {@link com.google.common.io.Files}
@@ -111,5 +115,45 @@ public class FilesExt {
 		if (!dir.mkdirs()) {
 			throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
 		}
+	}
+
+	/**
+	 * Identical to {@link Files#createParentDirs(File)}, but wraps the
+	 * {@link IOException} in a {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static void createParentDirs(File file) throws RuntimeIOException {
+		try {
+			Files.createParentDirs(file);
+		} catch (IOException e) {
+			throw new RuntimeIOException(e);
+		}
+	}
+
+	/**
+	 * Opens a {@link FileInputStream} from the file, throwing a description exception if this fails.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static FileInputStream newInputStream(File file) {
+		try {
+			return new FileInputStream(file);
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to open input stream from [%s].", file), e);
+		} 
+	}
+
+	/**
+	 * Opens a {@link FileOutputStream} to the file, throwing a description exception if this fails.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static FileOutputStream newOutputStream(File file) throws RuntimeIOException {
+		try {
+			return new FileOutputStream(file);
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to open output stream to [%s].", file), e);
+		} 
 	}
 }
