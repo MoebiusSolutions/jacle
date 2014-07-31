@@ -75,4 +75,38 @@ public class StringsExt {
 			CloseablesExt.closeQuietly(input);
 		}
 	}
+
+	/**
+	 * Compares two strings, using {@link String#compareTo(String)}, but
+	 * handling null values as well. If both objects are null, they are compared
+	 * equal. If one is null and the other isn't, the null value is sorted
+	 * before the non-null value.
+	 */
+	public static int compare(String s1, String s2) {
+		// Sort null to the beginning
+		if (s1 == null) {
+			return -1;
+		} else if (s2 == null) {
+			return 1;
+		} else {
+			return s1.compareTo(s2);
+		}
+	}
+
+	/**
+	 * Compares two strings, using {@link String#compareToIgnoreCase(String)}, but
+	 * handling null values as well. If both objects are null, they are compared
+	 * equal. If one is null and the other isn't, the null value is sorted
+	 * before the non-null value.
+	 */
+	public static int compareIgnoreCase(String s1, String s2) {
+		// Sort null to the beginning
+		if (s1 == null) {
+			return -1;
+		} else if (s2 == null) {
+			return 1;
+		} else {
+			return s1.compareToIgnoreCase(s2);
+		}
+	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import com.google.common.io.Files;
 
@@ -15,7 +16,7 @@ import com.google.common.io.Files;
 public class FilesExt {
 
 	/**
-	 * Deletes a provided directory and all files contained within. Slightly
+	 * Deletes all files and directories within the provided directory. This is slightly
 	 * different than Guava's deprecated implementation of this method, in that
 	 * this does not throw an exception if the target dir already does not
 	 * exist.</p>
@@ -31,24 +32,30 @@ public class FilesExt {
 	 * is a symbolic link or there is a symbolic link in the path leading to the
 	 * directory, this method will do nothing. Symbolic links within the
 	 * directory are not followed.
+	 * 
+	 * @throws RuntimeIOException
 	 **/
-	public static void deleteDirectoryContents(File directory) throws IOException {
-		if (!directory.exists()) {
-			return;
-		}
-		if (!directory.isDirectory()) {
-			throw new IOException(String.format("[%s] is not a directory", directory));
-		}
-		// Symbolic links will have different canonical and absolute paths
-		if (!directory.getCanonicalPath().equals(directory.getAbsolutePath())) {
-			return;
-		}
-		File[] files = directory.listFiles();
-		if (files == null) {
-			throw new IOException("Error listing files for " + directory);
-		}
-		for (File file : files) {
-			deleteRecursively(file);
+	public static void deleteDirectoryContents(File directory) throws RuntimeIOException {
+		try {
+			if (!directory.exists()) {
+				return;
+			}
+			if (!directory.isDirectory()) {
+				throw new RuntimeIOException(String.format("[%s] is not a directory", directory));
+			}
+			// Symbolic links will have different canonical and absolute paths
+			if (!getCanonicalFile(directory).equals(directory.getAbsolutePath())) {
+				return;
+			}
+			File[] files = directory.listFiles();
+			if (files == null) {
+				throw new RuntimeIOException(String.format("Error listing files for [%s]", directory));
+			}
+			for (File file : files) {
+				deleteRecursively(file);
+			}
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to delete [%s] recursively", directory));
 		}
 	}
 
@@ -70,16 +77,24 @@ public class FilesExt {
 	 * is a symbolic link or there is a symbolic link in the path leading to the
 	 * directory, this method will do nothing. Symbolic links within the
 	 * directory are not followed.
+	 * 
+	 * @throws RuntimeIOException
 	 **/
-	public static void deleteRecursively(File file) throws IOException {
-		if (!file.exists()) {
-			return;
+	public static void deleteRecursively(File file) throws RuntimeIOException {
+		boolean deleted;
+		try {
+			if (!file.exists()) {
+				return;
+			}
+			if (file.isDirectory()) {
+				deleteDirectoryContents(file);
+			}
+			deleted = file.delete();
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to delete [%s] recursively", file));
 		}
-		if (file.isDirectory()) {
-			deleteDirectoryContents(file);
-		}
-		if (!file.delete()) {
-			throw new IOException("Failed to delete " + file);
+		if (!deleted) {
+			throw new RuntimeIOException(String.format("Failed to delete [%s] recursively", file));
 		}
 	}
 
@@ -105,18 +120,51 @@ public class FilesExt {
 	 * @throws RuntimeIOException
 	 */
 	public static void mkdirs(File dir) throws RuntimeIOException {
-		if (dir.exists()) {
-			if (dir.isDirectory()) {
-				return;
-			} else {
+		try {
+			if (dir.exists()) {
+				if (dir.isDirectory()) {
+					return;
+				} else {
+					throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
+				}
+			}
+			if (!dir.mkdirs()) {
 				throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
 			}
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to mkdirs to [%s]", dir), e); 
 		}
-		if (!dir.mkdirs()) {
-			throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
-		}
+			
 	}
 
+	/**
+	 * Identical to {@link File#getCanonicalPath()}, but wraps the
+	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static String getCanonicalPath(File file) throws RuntimeIOException {
+		try {
+			return file.getCanonicalPath();
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to get canonical path of [%s]", file), e);
+		}
+	}
+	
+	/**
+	 * Identical to {@link File#getCanonicalFile()}, but wraps the
+	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static File getCanonicalFile(File file) throws RuntimeIOException {
+		try {
+			return file.getCanonicalFile();
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to get canonical path of [%s]", file), e);
+		}
+	}
+	
 	/**
 	 * Identical to {@link Files#createParentDirs(File)}, but wraps the
 	 * {@link IOException} in a {@link RuntimeIOException}.
@@ -136,7 +184,7 @@ public class FilesExt {
 	 * 
 	 * @throws RuntimeIOException
 	 */
-	public static FileInputStream newInputStream(File file) {
+	public static FileInputStream newInputStream(File file) throws RuntimeIOException {
 		try {
 			return new FileInputStream(file);
 		} catch (Exception e) {
@@ -155,5 +203,19 @@ public class FilesExt {
 		} catch (Exception e) {
 			throw new RuntimeIOException(String.format("Failed to open output stream to [%s].", file), e);
 		} 
+	}
+
+	/**
+	 * Identical to {@link FilesExt#write(CharSequence, File, Charset)}, but wraps the
+	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
+	 * 
+	 *  @throws RuntimeIOException
+	 */
+	public static void write(CharSequence chars, File file, Charset charset) throws RuntimeIOException {
+		try {
+			Files.write(chars, file, charset);
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to write to [%s]", file));
+		}
 	}
 }
