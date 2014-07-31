@@ -132,6 +132,16 @@ Finally, deploy the following files from the build server to Artifactory:
 
 ## Revision History
 
+### jacle-1.4
+
+* Added:
+    * FilesExt.createParentDirs()
+    * FilesExt.newInputStream()
+    * FilesExt.newOutputStream()
+    * StringsExt.toStream()
+    * StringsExt.fromStream()
+    * PropertiesUtils
+
 ### jacle-1.3
 
 * Added:
