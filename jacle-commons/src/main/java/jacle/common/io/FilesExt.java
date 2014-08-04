@@ -16,22 +16,23 @@ import com.google.common.io.Files;
 public class FilesExt {
 
 	/**
-	 * Deletes all files and directories within the provided directory. This is slightly
-	 * different than Guava's deprecated implementation of this method, in that
-	 * this does not throw an exception if the target dir already does not
-	 * exist.</p>
+	 * Deletes all files and directories within the provided directory. This is
+	 * slightly different than Guava's deprecated implementation of this method,
+	 * in that this does not throw an exception if the target dir already does
+	 * not exist, and this has safer handling of symlinks by leveraging JDK
+	 * 7.</p>
 	 * 
 	 * Note that Guava deprecated this method with the following
 	 * explanation:</p>
 	 * 
-	 * This method suffers from poor symlink detection and race conditions. This
-	 * functionality can be supported suitably only by shelling out to an
+	 * "This method suffers from poor symlink detection and race conditions.
+	 * This functionality can be supported suitably only by shelling out to an
 	 * operating system command such as rm -rf or del /s. This method is
 	 * scheduled to be removed in Guava release 11. Deletes all the files within
 	 * a directory. Does not delete the directory itself. If the file argument
 	 * is a symbolic link or there is a symbolic link in the path leading to the
 	 * directory, this method will do nothing. Symbolic links within the
-	 * directory are not followed.
+	 * directory are not followed."</p>
 	 * 
 	 * @throws RuntimeIOException
 	 **/
@@ -43,8 +44,9 @@ public class FilesExt {
 			if (!directory.isDirectory()) {
 				throw new RuntimeIOException(String.format("[%s] is not a directory", directory));
 			}
-			// Symbolic links will have different canonical and absolute paths
-			if (!getCanonicalFile(directory).equals(directory.getAbsolutePath())) {
+			// Do not walk into symlinks. Just stop, allowing the caller to
+			// delete the link if desired.
+			if (java.nio.file.Files.isSymbolicLink(directory.toPath())) {
 				return;
 			}
 			File[] files = directory.listFiles();
@@ -62,21 +64,22 @@ public class FilesExt {
 	/**
 	 * Deletes a provided file or directory. If the provided path is a
 	 * directory, this behaves identically to
-	 * {@link #deleteDirectoryContents(File)}. Slightly different than Guava's
-	 * deprecated implementation of this method, in that this does not throw an
-	 * exception if the target file already does not exist.</p>
+	 * {@link #deleteDirectoryContents(File)}. This is slightly different than
+	 * Guava's deprecated implementation of this method, in that this does not
+	 * throw an exception if the target dir already does not exist, and this has
+	 * safer handling of symlinks by leveraging JDK 7.</p>
 	 * 
 	 * Note that Guava deprecated this method with the following
 	 * explanation:</p>
 	 * 
-	 * This method suffers from poor symlink detection and race conditions. This
-	 * functionality can be supported suitably only by shelling out to an
+	 * "This method suffers from poor symlink detection and race conditions.
+	 * This functionality can be supported suitably only by shelling out to an
 	 * operating system command such as rm -rf or del /s. This method is
 	 * scheduled to be removed in Guava release 11. Deletes all the files within
 	 * a directory. Does not delete the directory itself. If the file argument
 	 * is a symbolic link or there is a symbolic link in the path leading to the
 	 * directory, this method will do nothing. Symbolic links within the
-	 * directory are not followed.
+	 * directory are not followed."
 	 * 
 	 * @throws RuntimeIOException
 	 **/
