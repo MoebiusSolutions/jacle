@@ -117,6 +117,31 @@ public class FilesExt {
 	}
 
 	/**
+	 * Deletes the specified directory and any parent directories if and only if
+	 * they are empty.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static void deleteEmptyDirAndParents(File directory) throws RuntimeIOException {
+		try {
+			if (!directory.isDirectory()) {
+				return;
+			}
+			if (directory.list().length > 0) {
+				return;
+			}
+			// Delete each parent directory that has no children
+			while (directory.list().length < 1) {
+				File parent = directory.getParentFile();
+				delete(directory);
+				directory = parent;
+			}
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to delete empty parents of [%s]", directory), e);
+		}
+	}
+
+	/**
 	 * Creates the specific directory and all of its parents. Does not throw an
 	 * exception if the file already doesn't exist.
 	 * 
@@ -219,6 +244,20 @@ public class FilesExt {
 			Files.write(chars, file, charset);
 		} catch (IOException e) {
 			throw new RuntimeIOException(String.format("Failed to write to [%s]", file));
+		}
+	}
+
+	/**
+	 * Identical to {@link Files#toString(File, Charset)}, but wraps the
+	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static String toString(File file, Charset charset) {
+		try {
+			return Files.toString(file, charset);
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to read [%s]", file));
 		}
 	}
 }
