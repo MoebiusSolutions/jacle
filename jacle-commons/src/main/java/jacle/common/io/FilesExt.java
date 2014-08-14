@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitor;
+import java.nio.file.Path;
+import java.util.Set;
 
 import com.google.common.io.Files;
 
@@ -162,7 +166,20 @@ public class FilesExt {
 		} catch (Exception e) {
 			throw new RuntimeIOException(String.format("Failed to mkdirs to [%s]", dir), e); 
 		}
-			
+	}
+
+	/**
+	 * Identical to {@link Files#move(File, File)}, but wraps the
+	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static void move(File file, File newFile) throws RuntimeIOException {
+		try {
+			Files.move(file, newFile);
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to move [%s] to [%s]", file, newFile));
+		}
 	}
 
 	/**
@@ -203,7 +220,7 @@ public class FilesExt {
 		try {
 			Files.createParentDirs(file);
 		} catch (IOException e) {
-			throw new RuntimeIOException(e);
+			throw new RuntimeIOException(String.format("Failed to create parent directories of [%s]", file), e);
 		}
 	}
 
@@ -243,7 +260,7 @@ public class FilesExt {
 		try {
 			Files.write(chars, file, charset);
 		} catch (IOException e) {
-			throw new RuntimeIOException(String.format("Failed to write to [%s]", file));
+			throw new RuntimeIOException(String.format("Failed to write to [%s]", file), e);
 		}
 	}
 
@@ -253,11 +270,45 @@ public class FilesExt {
 	 * 
 	 * @throws RuntimeIOException
 	 */
-	public static String toString(File file, Charset charset) {
+	public static String toString(File file, Charset charset) throws RuntimeIOException {
 		try {
 			return Files.toString(file, charset);
 		} catch (IOException e) {
-			throw new RuntimeIOException(String.format("Failed to read [%s]", file));
+			throw new RuntimeIOException(String.format("Failed to read [%s]", file), e);
+		}
+	}
+
+	/**
+	 * Identical to
+	 * {@link java.nio.file.Files#walkFileTree(Path, Set, int, FileVisitor)},
+	 * but wraps the {@link IOException} in a descriptive
+	 * {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+    public static Path walkFileTree(
+    		Path start, Set<FileVisitOption> options, int maxDepth, FileVisitor<? super Path> visitor)
+    				throws RuntimeIOException
+    {
+		try {
+			return java.nio.file.Files.walkFileTree(start, options, maxDepth, visitor);
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to walk files from [%s]", start), e);
+		}
+    }
+
+	/**
+	 * Identical to {@link java.nio.file.Files#walkFileTree(Path, FileVisitor)},
+	 * but wraps the {@link IOException} in a descriptive
+	 * {@link RuntimeIOException}.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static Path walkFileTree(Path start, FileVisitor<? super Path> visitor) throws RuntimeIOException {
+		try {
+			return java.nio.file.Files.walkFileTree(start, visitor);
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to walk files from [%s]", start), e);
 		}
 	}
 }
