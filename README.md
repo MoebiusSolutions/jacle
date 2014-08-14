@@ -132,6 +132,32 @@ Finally, deploy the following files from the build server to Artifactory:
 
 ## Revision History
 
+### jacle-1.5
+
+* Added:
+    * TempJavaProperty
+    * StringsExt.compare()
+    * StringsExt.compareIgnoreCase()
+    * FilesExt.getCanonicalPath()
+    * FilesExt.getCanonicalFile()
+    * FilesExt.write()
+    * FilesExt.deleteEmptyDirAndParents()
+    * FilesExt.toString()
+    * Handler
+    * KeyValue
+    * StringExt.substring()
+    * StringExt.prefixLines()
+    * PrefixLogFormatte
+    * FilesExt.walkFileTree()
+    * FilesExt.move()
+    * Provider
+    * UrlParser
+    
+* Fixed:
+    * These now do better symlink detection (and avoid bug due to inconsistent getAbsolutePath())
+        * FilesExt.deleteDirectoryContents()
+        * FilesExt.deleteRecursively()
+
 ### jacle-1.4
 
 * Added:
