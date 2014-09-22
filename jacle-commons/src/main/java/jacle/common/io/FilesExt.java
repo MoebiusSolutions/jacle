@@ -161,7 +161,7 @@ public class FilesExt {
 				}
 			}
 			if (!dir.mkdirs()) {
-				throw new RuntimeIOException(String.format("Directory [%s] exists as a file. Cannot create it.", dir));
+				throw new RuntimeIOException(String.format("Failed to create directory [%s]", dir));
 			}
 		} catch (Exception e) {
 			throw new RuntimeIOException(String.format("Failed to mkdirs to [%s]", dir), e); 
