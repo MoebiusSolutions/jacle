@@ -31,7 +31,7 @@ public class FilesExtTest {
 		FilesExt.createParentDirs(file);
 		FilesExt.write("mock-data", file, StandardCharsets.UTF_8);
 		String relativePath = FilesExt.getRelativePath(dir, file);
-		assertEquals("some/sub/path", relativePath);
+		assertEquals(new File("some/sub/path").getPath(), relativePath);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class FilesExtTest {
 		File file = files.getFile("some/base/path/some/sub/path");
 		FilesExt.mkdirs(file);
 		String relativePath = FilesExt.getRelativePath(dir, file);
-		assertEquals("some/sub/path", relativePath);
+		assertEquals(new File("some/sub/path").getPath(), relativePath);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class FilesExtTest {
 		dir = files.getFile("some/../some/base/./path");
 		file = files.getFile("some/base/../base/path/some/../some/sub/path");
 		String relativePath = FilesExt.getRelativePath(dir, file);
-		assertEquals("some/sub/path", relativePath);
+		assertEquals(new File("some/sub/path").getPath(), relativePath);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class FilesExtTest {
 		dir = files.getFile("some/../some/base/./path");
 		file = files.getFile("some/base/../base/path/some/../some/sub/path");
 		String relativePath = FilesExt.getRelativePath(dir, file);
-		assertEquals("some/sub/path", relativePath);
+		assertEquals(new File("some/sub/path").getPath(), relativePath);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class FilesExtTest {
 		File dir = files.getFile("some/base/path");
 		File file = files.getFile("some/base/path/some/sub/path");
 		String relativePath = FilesExt.getRelativePath(dir, file);
-		assertEquals("some/sub/path", relativePath);
+		assertEquals(new File("some/sub/path").getPath(), relativePath);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class FilesExtTest {
 		File dir = files.getFile("some/base/path").getAbsoluteFile();
 		File file = files.getFile("some/base/path/some/sub/path").getAbsoluteFile();
 		String relativePath = FilesExt.getRelativePath(dir, file);
-		assertEquals("some/sub/path", relativePath);
+		assertEquals(new File("some/sub/path").getPath(), relativePath);
 	}
 
 	/**
