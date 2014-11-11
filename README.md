@@ -136,6 +136,16 @@ Finally, deploy the following files from the build server to Artifactory:
 
 ## Revision History
 
+### jacle-1.6
+
+* Added:
+    * JavaUtil.getSimpleFullName()
+    * PropertiesUtils.fromResource()
+    * FilesExt.getRelativeFile()
+    * FilesExt.getRelativePath()
+* Fixed:
+    * Updated git flow notes for latest git flow version
+
 ### jacle-1.5
 
 * Added:
