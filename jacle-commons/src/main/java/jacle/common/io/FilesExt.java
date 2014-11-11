@@ -311,4 +311,146 @@ public class FilesExt {
 			throw new RuntimeIOException(String.format("Failed to walk files from [%s]", start), e);
 		}
 	}
+
+	/**
+	 * Returns the relative file path from the <code>baseDir</code> to the
+	 * <code>targetFile</code>. The two paths need not be in the same form
+	 * (canonical, relative, absolute, etc). However, if they are not, they must
+	 * both exist. Both paths must not point to the same directory. No "/"
+	 * prefix is included in the return; it's a relative path.</p>
+	 * 
+	 * For example, if these parameters were provided:</p>
+	 * 
+	 * <ul>
+	 * <li>baseDir: "some/base/path"</li>
+	 * <li>targetDir: "some/base/path/some/sub/path"</li>
+	 * </ul>
+	 * 
+	 * ... the method would return "some/sub/path".
+	 * 
+	 * This method first attempts to compare the strings of the two paths
+	 * literally. This means that relative or non-canonical paths can be
+	 * compared, and if the <code>baseDir</code> is an exact prefix of the
+	 * <code>targetFile</code> path, a relative path will be returned (that may
+	 * or may not contain ".." or ".").</p>
+	 * 
+	 * However, if the <code>baseDir</code> is not an exact prefix to the
+	 * <code>targetFile</code>, both paths will be converted to their canonical
+	 * forms for comparison. This requires that both files exist. If either does
+	 * not exist, this method throws a {@link FileNotFoundException}. If both
+	 * files exist, but the <code>targetFile</code> does not fall within the
+	 * <code>baseDir</code>, this method throws a
+	 * {@link FileNotContainedInException}. Otherwise, this method returns the
+	 * relative path from the <code>baseDir</code> to the
+	 * <code>targetFile</code>.
+	 * 
+	 * @throws FileNotContainedInException
+	 *             Thrown if <code>targetFile</code> does not contain
+	 *             <code>baseDir</code>. This exception is never thrown if this
+	 *             can't be decided conclusively. This exception is thrown when
+	 *             both paths point to the same file. E.g. the base path does
+	 *             not include the target path, it IS the target path.</p>
+	 * 
+	 * @throws FileNotFoundException
+	 *             Thrown if and only if the two paths (<code>baseDir</code> and
+	 *             <code>targetFile</code>) are specified in different forms
+	 *             (relative, absolute, non-canonical, etc) and one of them
+	 *             doesn't exist. In this situation is is impossible to conclude
+	 *             whether <code>baseDir</code> contains <code>targetFile</code>
+	 *             . This exception is NOT thrown if both paths are the same
+	 *             form (both absolute, for example), and either does not exist,
+	 *             as simple textual comparison of the paths is still possible.
+	 *             <p>
+	 * 
+	 * @throws RuntimeIOException
+	 *             If anything else fails
+	 */
+	public static String getRelativePath(File baseDir, File targetFile) throws FileNotContainedInException, FileNotFoundException, RuntimeIOException {
+		try {
+			// Attempt literal match (file need not exist if base paths are identical)
+			String basePath = baseDir.getPath();
+			String targetPath = targetFile.getPath();
+			if (targetPath.startsWith(basePath)) {
+				if (basePath.length() == targetPath.length()) {
+					throw new FileNotContainedInException(String.format("Base dir and target file are the same file [%s]", targetFile));
+				}
+				return targetPath.substring(basePath.length()+1 /* skip slash */);
+			}
+			// Convert paths to canonical form to attempt match
+			if (!baseDir.exists() && !targetFile.exists()) {
+				throw new FileNotFoundException(String.format(
+						"Cannot confirm that target file [%s] is contained in the base dir [%s] as one doesn't exist", targetFile, baseDir));
+			}
+			basePath = baseDir.getCanonicalPath();
+			targetPath = targetFile.getCanonicalPath();
+			if (targetPath.startsWith(basePath)) {
+				if (basePath.length() == targetPath.length()) {
+					throw new FileNotContainedInException(String.format("Base dir and target file are the same file [%s]", targetFile));
+				}
+				return targetPath.substring(basePath.length()+1 /* skip slash */);
+			}
+			throw new FileNotContainedInException(String.format("Target file [%s] is not contained in the base dir [%s]", targetFile, baseDir));
+		} catch (FileNotContainedInException e) {
+			throw e;
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to get relative path of [%s] within [%s]", targetFile, baseDir));
+		}
+	}
+
+	/**
+	 * Returns the relative file path from the <code>baseDir</code> to the
+	 * <code>targetFile</code>. The two paths need not be in the same form
+	 * (canonical, relative, absolute, etc). However, if they are not, they must
+	 * both exist. Both paths must not point to the same directory. No "/"
+	 * prefix is included in the return; it's a relative path.</p>
+	 * 
+	 * For example, if these parameters were provided:</p>
+	 * 
+	 * <ul>
+	 * <li>baseDir: "some/base/path"</li>
+	 * <li>targetDir: "some/base/path/some/sub/path"</li>
+	 * </ul>
+	 * 
+	 * ... the method would return "some/sub/path".
+	 * 
+	 * This method first attempts to compare the strings of the two paths
+	 * literally. This means that relative or non-canonical paths can be
+	 * compared, and if the <code>baseDir</code> is an exact prefix of the
+	 * <code>targetFile</code> path, a relative path will be returned (that may
+	 * or may not contain ".." or ".").</p>
+	 * 
+	 * However, if the <code>baseDir</code> is not an exact prefix to the
+	 * <code>targetFile</code>, both paths will be converted to their canonical
+	 * forms for comparison. This requires that both files exist. If either does
+	 * not exist, this method throws a {@link FileNotFoundException}. If both
+	 * files exist, but the <code>targetFile</code> does not fall within the
+	 * <code>baseDir</code>, this method throws a
+	 * {@link FileNotContainedInException}. Otherwise, this method returns the
+	 * relative path from the <code>baseDir</code> to the
+	 * <code>targetFile</code>.
+	 * 
+	 * @throws FileNotContainedInException
+	 *             Thrown if <code>targetFile</code> does not contain
+	 *             <code>baseDir</code>. This exception is never thrown if this
+	 *             can't be decided conclusively. This exception is thrown when
+	 *             both paths point to the same file. E.g. the base path does
+	 *             not include the target path, it IS the target path.</p>
+	 * 
+	 * @throws FileNotFoundException
+	 *             Thrown if and only if the two paths (<code>baseDir</code> and
+	 *             <code>targetFile</code>) are specified in different forms
+	 *             (relative, absolute, non-canonical, etc) and one of them
+	 *             doesn't exist. In this situation is is impossible to conclude
+	 *             whether <code>baseDir</code> contains <code>targetFile</code>
+	 *             . This exception is NOT thrown if both paths are the same
+	 *             form (both absolute, for example), and either does not exist,
+	 *             as simple textual comparison of the paths is still possible.
+	 *             <p>
+	 * 
+	 * @throws RuntimeIOException
+	 *             If anything else fails
+	 */
+	public static File getRelativeFile(File baseDir, File targetFile) throws FileNotContainedInException, FileNotFoundException, RuntimeIOException {
+		return new File(getRelativePath(baseDir, targetFile));
+	}
 }
