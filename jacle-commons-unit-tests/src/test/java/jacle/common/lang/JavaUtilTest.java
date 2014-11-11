@@ -21,9 +21,9 @@ public class JavaUtilTest {
 	 */
 	@Test
 	public void testGetClassName() throws Exception {
-		JavaUtil util = JavaUtil.I;
+		final JavaUtil util = JavaUtil.I;
 		MockAltInterface anon = new MockAltInterface(){
-			public String getFromAnonymousClass(JavaUtil util) {
+			public String getFromAnonymousClass() {
 				return util.getClassName();
 			}
 		};
@@ -32,7 +32,7 @@ public class JavaUtilTest {
 		assertEquals(MockClassNameGetter.class.getName(), new MockClassNameGetter().getFromNestedMethod(util));
 		// Matches string like "com.package.Class$1"
 		Pattern expectedClassName = Pattern.compile(Pattern.quote(this.getClass().getName())+"\\$\\d+");
-		assertTrue(expectedClassName.matcher(anon.getFromAnonymousClass(util)).matches());
+		assertTrue(expectedClassName.matcher(anon.getFromAnonymousClass()).matches());
 	}
 	
 	static class MockClassNameGetter {
@@ -66,16 +66,16 @@ public class JavaUtilTest {
 	 */
 	@Test
 	public void testGetMethodName() throws Exception {
-		JavaUtil util = JavaUtil.I;
+		final JavaUtil util = JavaUtil.I;
 		MockAltInterface anon = new MockAltInterface(){
-			public String getFromAnonymousClass(JavaUtil util) {
+			public String getFromAnonymousClass() {
 				return util.getMethodName();
 			}
 		};
 		assertEquals("getFromStatic", MockMethodNameGetter.getFromStatic(util));
 		assertEquals("getFromMemberMethod", new MockMethodNameGetter().getFromMemberMethod(util));
 		assertEquals("nestedMethod", new MockMethodNameGetter().getFromNestedMethod(util));
-		assertEquals("getFromAnonymousClass", anon.getFromAnonymousClass(util));
+		assertEquals("getFromAnonymousClass", anon.getFromAnonymousClass());
 	}
 	
 	static class MockMethodNameGetter {
@@ -109,9 +109,9 @@ public class JavaUtilTest {
 	 */
 	@Test
 	public void testGetSimpleClassName() {
-		JavaUtil util = JavaUtil.I;
+		final JavaUtil util = JavaUtil.I;
 		MockAltInterface anon = new MockAltInterface(){
-			public String getFromAnonymousClass(JavaUtil util) {
+			public String getFromAnonymousClass() {
 				return util.getSimpleClassName();
 			}
 		};
@@ -120,7 +120,7 @@ public class JavaUtilTest {
 		assertEquals("JavaUtilTest$MockSimpleClassNameGetter", new MockSimpleClassNameGetter().getFromNestedMethod(util));
 		// Matches string like "ClassName$1"
 		Pattern expectedClassName = Pattern.compile(Pattern.quote(this.getClass().getSimpleName())+"\\$\\d+");
-		assertTrue(expectedClassName.matcher(anon.getFromAnonymousClass(util)).matches());
+		assertTrue(expectedClassName.matcher(anon.getFromAnonymousClass()).matches());
 	}
 
 	private static class MockSimpleClassNameGetter {
@@ -148,7 +148,7 @@ public class JavaUtilTest {
 	 */
 	@Test
 	public void testGetSimpleClassName_FromString() {
-		JavaUtil util = JavaUtil.I;
+		final JavaUtil util = JavaUtil.I;
 		// Standard format
 		assertEquals("SomeClass", util.getSimpleClassName("jacle.common.SomeClass"));
 		// Already simple
@@ -175,16 +175,16 @@ public class JavaUtilTest {
 	 */
 	@Test
 	public void testGetPackageName() {
-		JavaUtil util = JavaUtil.I;
+		final JavaUtil util = JavaUtil.I;
 		MockAltInterface anon = new MockAltInterface(){
-			public String getFromAnonymousClass(JavaUtil util) {
+			public String getFromAnonymousClass() {
 				return util.getPackageName();
 			}
 		};
 		assertEquals("jacle.common.lang", MockSimplePackageNameGetter.getFromStatic(util));
 		assertEquals("jacle.common.lang", new MockSimplePackageNameGetter().getFromMemberMethod(util));
 		assertEquals("jacle.common.lang", new MockSimplePackageNameGetter().getFromNestedMethod(util));
-		assertEquals("jacle.common.lang", anon.getFromAnonymousClass(util));
+		assertEquals("jacle.common.lang", anon.getFromAnonymousClass());
 	}
 
 	private static class MockSimplePackageNameGetter {
@@ -212,7 +212,7 @@ public class JavaUtilTest {
 	 */
 	@Test
 	public void testGetPackageName_FromString() {
-		JavaUtil util = JavaUtil.I;
+		final JavaUtil util = JavaUtil.I;
 		// Standard format
 		assertEquals("jacle.common", util.getPackageName("jacle.common.SomeClass"));
 		// Already simple
@@ -227,7 +227,52 @@ public class JavaUtilTest {
 		assertEquals("jacle.common", util.getPackageName("jacle.common.WrapperClass$1"));
 	}
 
+	/**
+	 * Verifies that the {@link JavaUtil#getSimpleFullName()} method returns a
+	 * proper value from the following contexts:
+	 * <ul>
+	 * <li>Static method</li>
+	 * <li>Instance method</li>
+	 * <li>Nested instance method</li>
+	 * <li>Anonymous inner class method</li>
+	 * </ul>
+	 */
+	@Test
+	public void testGetSimpleFullName() {
+		final JavaUtil util = JavaUtil.I;
+		MockAltInterface anon = new MockAltInterface() {
+			public String getFromAnonymousClass() {
+				return util.getSimpleFullName();
+			}
+		};
+		assertEquals("JavaUtilTest$MockSimpleFullNameGetter.getFromStatic()", MockSimpleFullNameGetter.getFromStatic(util));
+		assertEquals("JavaUtilTest$MockSimpleFullNameGetter.getFromMemberMethod()", new MockSimpleFullNameGetter().getFromMemberMethod(util));
+		assertEquals("JavaUtilTest$MockSimpleFullNameGetter.nestedMethod()", new MockSimpleFullNameGetter().getFromNestedMethod(util));
+		// Matches string like "ClassName$1"
+		Pattern expectedClassName = Pattern.compile(Pattern.quote(this.getClass().getSimpleName())+"\\$\\d+\\.getFromAnonymousClass\\(\\)");
+		assertTrue(expectedClassName.matcher(anon.getFromAnonymousClass()).matches());
+	}
+
+	private static class MockSimpleFullNameGetter {
+
+		public static String getFromStatic(JavaUtil util) {
+			return util.getSimpleFullName();
+		}
+
+		public String getFromMemberMethod(JavaUtil util) {
+			return util.getSimpleFullName();
+		}
+
+		public String getFromNestedMethod(JavaUtil util) {
+			return nestedMethod(util);
+		}
+
+		private String nestedMethod(JavaUtil util) {
+			return util.getSimpleFullName();
+		}
+	}
+
 	private static interface MockAltInterface {
-		public String getFromAnonymousClass(JavaUtil util);
+		public String getFromAnonymousClass();
 	}
 }

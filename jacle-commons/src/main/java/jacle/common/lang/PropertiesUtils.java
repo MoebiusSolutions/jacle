@@ -4,6 +4,7 @@ import jacle.common.io.CloseablesExt;
 import jacle.common.io.FilesExt;
 import jacle.common.io.RuntimeIOException;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,8 +13,11 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+
+import com.google.common.io.Resources;
 
 public class PropertiesUtils {
 
@@ -85,6 +89,19 @@ public class PropertiesUtils {
 			return properties;
 		} catch (Exception e) {
 			throw new RuntimeIOException("Failed to read properties from stream", e);
+		}
+	}
+
+	public Properties fromResource(String resourceName) throws RuntimeIOException  {
+		final URL url = Resources.getResource(resourceName);
+		BufferedInputStream stream = null;
+		try {
+			stream = Resources.asByteSource(url).openBufferedStream();
+			return fromStream(stream);
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to read properties from resource [%s]", resourceName), e);
+		} finally {
+			CloseablesExt.closeQuietly(stream);
 		}
 	}
 }

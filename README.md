@@ -39,21 +39,25 @@ After installing git-flow, checkout the "develop" branch:
 
     $ git checkout -b develop origin/develop
 
-The be sure to "git flow init" your local repo, which populates your ".git/config" repo file with git-flow options. The important point here is to set these values (mindful of the final value):
+The be sure to "git flow init" your local repo, which populates your ".git/config" repo file with git-flow options. The important point here is to set these values (I've been running with some defaults from an older version of git-flow):
 
     $ git flow init -f
 
+    Which branch should be used for bringing forth production releases?
+       - develop
+       - master
+    Branch name for production releases: [] master
+    
     Which branch should be used for integration of the "next release"?
        - develop
-       - releases
-    Branch name for "next release" development: [develop] develop
+    Branch name for "next release" development: [] develop
     
     How to name your supporting branch prefixes?
-    Feature branches? [feature-]
-    Release branches? [release-]
-    Hotfix branches? [hotfix-]
-    Support branches? [support/]
-    Version tag prefix? [v]
+    Feature branches? [feature/] feature-
+    Release branches? [release/] release-
+    Hotfix branches? [hotfix/] hotfix-
+    Support branches? [support/] support-
+    Version tag prefix? [] v
 
 ### Performing a Release
 
@@ -131,6 +135,16 @@ Finally, deploy the following files from the build server to Artifactory:
     limitations under the License.
 
 ## Revision History
+
+### jacle-1.6
+
+* Added:
+    * JavaUtil.getSimpleFullName()
+    * PropertiesUtils.fromResource()
+    * FilesExt.getRelativeFile()
+    * FilesExt.getRelativePath()
+* Fixed:
+    * Updated git flow notes for latest git flow version
 
 ### jacle-1.5
 

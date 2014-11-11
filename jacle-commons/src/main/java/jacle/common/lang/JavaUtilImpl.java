@@ -30,6 +30,11 @@ public class JavaUtilImpl implements JavaUtil {
 	}
 
 	@Override
+	public String getSimpleClassName(int nestedDepth) {
+		return getSimpleClassName(getClassName(1+nestedDepth));
+	}
+
+	@Override
 	public String getSimpleClassName(String fullyQualifiedName) {
 		Matcher matcher = CLASS_NAME_PATTERN.matcher(fullyQualifiedName);
 		if (!matcher.matches()) {
@@ -44,8 +49,18 @@ public class JavaUtilImpl implements JavaUtil {
 	}
 
 	@Override
+	public String getMethodName(int nestedDepth) {
+		return Thread.currentThread().getStackTrace()[2+nestedDepth].getMethodName();
+	}
+
+	@Override
 	public String getPackageName() {
 		return getPackageName(Thread.currentThread().getStackTrace()[2].getClassName());
+	}
+
+	@Override
+	public String getPackageName(int nestedDepth) {
+		return getPackageName(Thread.currentThread().getStackTrace()[2+nestedDepth].getClassName());
 	}
 
 	@Override
@@ -56,5 +71,19 @@ public class JavaUtilImpl implements JavaUtil {
 		}
 		String packag = matcher.group(1);
 		return CharMatcher.is('.').trimTrailingFrom(packag);
+	}
+
+	@Override
+	public String getSimpleFullName() {
+		return getSimpleFullName(getSimpleClassName(1), getMethodName(1));
+	}
+
+	@Override
+	public String getSimpleFullName(int nestedDepth) {
+		return getSimpleFullName(getSimpleClassName(nestedDepth+1), getMethodName(nestedDepth+1));
+	}
+	
+	private String getSimpleFullName(String className, String methodName) {
+		return String.format("%s.%s()", className, methodName);
 	}
 }

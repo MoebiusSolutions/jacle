@@ -23,14 +23,11 @@ public interface JavaUtil {
 	public String getClassName();
 
 	/**
-	 * Returns the name of the class <code>nestedDepth</code> callstack entries
-	 * below the caller of this method, effectively walking up stack
-	 * <code>nestedDepth</code> entries beyond what {@link #getClassName()}
-	 * returns.
+	 * Calls {@link #getClassName()} <code>nestedDepth</code> entries
+	 * lower in the callstack.
 	 * 
 	 * @param nestedDepth
-	 *            The number of trace elements to walk below from what
-	 *            {@link #getClassName()} would return
+	 *            The number of additional call stack elements to walk down
 	 */
 	public String getClassName(int nestedDepth);
 
@@ -41,6 +38,15 @@ public interface JavaUtil {
 	 * this method is that it can be used even from static contexts.</p>
 	 */
 	public String getSimpleClassName();
+
+	/**
+	 * Calls {@link #getSimpleClassName()} <code>nestedDepth</code> entries
+	 * lower in the callstack.
+	 * 
+	 * @param nestedDepth
+	 *            The number of additional call stack elements to walk down
+	 */
+	public String getSimpleClassName(int nestedDepth);
 
 	/**
 	 * Returns a "simple name" (without package prefix) version of a class name
@@ -61,9 +67,27 @@ public interface JavaUtil {
 	public String getMethodName();
 
 	/**
+	 * Calls {@link #getMethodName()} <code>nestedDepth</code> entries
+	 * lower in the callstack.
+	 * 
+	 * @param nestedDepth
+	 *            The number of additional call stack elements to walk down
+	 */
+	public String getMethodName(int nestedDepth);
+
+	/**
 	 * Returns the package name of the calling method.</p>
 	 */
 	public String getPackageName();
+
+	/**
+	 * Calls {@link #getPackageName()} <code>nestedDepth</code> entries
+	 * lower in the callstack.
+	 * 
+	 * @param nestedDepth
+	 *            The number of additional call stack elements to walk down
+	 */
+	public String getPackageName(int nestedDepth);
 
 	/**
 	 * Returns the package name parsed from the provided fully qualified class
@@ -73,4 +97,22 @@ public interface JavaUtil {
 	 * class name, the original string is returned.</p>
 	 */
 	public String getPackageName(String fullyQualifiedName);
+
+	/**
+	 * Returns the name of the calling method in the form
+	 * "ClassName.methodName()". The arguments are always empty, so overloaded
+	 * methods will have identical signatures. In the case of nested and inner
+	 * classes, the returned string looks like
+	 * "ClassName$NestedClass.methodName()" or "ClassName$4.methodName()".
+	 */
+	public String getSimpleFullName();
+
+	/**
+	 * Calls {@link #getSimpleFullName()} <code>nestedDepth</code> entries
+	 * lower in the callstack.
+	 * 
+	 * @param nestedDepth
+	 *            The number of additional call stack elements to walk down
+	 */
+	public String getSimpleFullName(int nestedDepth);
 }
