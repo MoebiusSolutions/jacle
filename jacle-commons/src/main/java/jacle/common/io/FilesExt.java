@@ -265,6 +265,20 @@ public class FilesExt {
 	}
 
 	/**
+	 * Identical to {@link FilesExt#append(CharSequence, File, Charset)}, but wraps the
+	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
+	 * 
+	 *  @throws RuntimeIOException
+	 */
+	public static void append(CharSequence chars, File file, Charset charset) throws RuntimeIOException {
+		try {
+			Files.append(chars, file, charset);
+		} catch (IOException e) {
+			throw new RuntimeIOException(String.format("Failed to write to [%s]", file), e);
+		}
+	}
+
+	/**
 	 * Identical to {@link Files#toString(File, Charset)}, but wraps the
 	 * {@link IOException} in a descriptive {@link RuntimeIOException}.
 	 * 
