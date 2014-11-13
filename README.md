@@ -108,9 +108,6 @@ Update versions in pom files and pushs:
     $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
     $ git push
 
-e have a [jacle-commons branch](https://build.moesol.com/jenkins/job/jacle-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
-
-
 Finally, deploy the following files from the build server to [Artifactory](https://artifactory.moesol.com/artifactory/) by executing the [jacle-commons do release](https://build.moesol.com/jenkins/job/jacle-commons%20do%20release/) build for the release tag (e.g. "release-1.0").
 
     jacle-parent-1.0.pom
