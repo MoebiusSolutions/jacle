@@ -142,6 +142,9 @@ Finally, deploy the following files from the build server to [Artifactory](https
 ### jacle-1.6
 
 * Added:
+    * FilesExt.append()
+
+* Added:
     * JavaUtil.getSimpleFullName()
     * PropertiesUtils.fromResource()
     * FilesExt.getRelativeFile()
