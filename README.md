@@ -91,7 +91,7 @@ Push changes to the server:
 
 Run a build of the branch on the server:
 
-*   We have a [jacle branch](https://build.moesol.com/jenkins/job/jacle-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
+*   We have a [jacle-commons branch](https://build.moesol.com/jenkins/job/jacle-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
 
 Repeatedly commit, push, and build until the build is stable.
 
@@ -108,7 +108,10 @@ Update versions in pom files and pushs:
     $ git commit -m 'Rolling version to 1.1-SNAPSHOT'
     $ git push
 
-Finally, deploy the following files from the build server to Artifactory:
+e have a [jacle-commons branch](https://build.moesol.com/jenkins/job/jacle-commons%20branch/) build on Jenkins that takes a parameter of the branch name (e.g. "release-1.0").
+
+
+Finally, deploy the following files from the build server to [Artifactory](https://artifactory.moesol.com/artifactory/) by executing the [jacle-commons do release](https://build.moesol.com/jenkins/job/jacle-commons%20do%20release/) build for the release tag (e.g. "release-1.0").
 
     jacle-parent-1.0.pom
     jacle-commons-1.0.pom
@@ -137,6 +140,9 @@ Finally, deploy the following files from the build server to Artifactory:
 ## Revision History
 
 ### jacle-1.6
+
+* Added:
+    * FilesExt.append()
 
 * Added:
     * JavaUtil.getSimpleFullName()
