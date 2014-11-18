@@ -31,10 +31,17 @@ public class JUnitFiles {
 	 * Creates a temporary directory for files named for the provided junit
 	 * class
 	 */
-	public JUnitFiles(String className) {
-		this.baseDir = new File("target/junit-temp/"+className);
+	public JUnitFiles(String junitClassName) {
+		this(new File("target/junit-temp/"+junitClassName));
 	}
 	
+	/**
+	 * Creates a temporary directory for files in the specified directory
+	 */
+	public JUnitFiles(File dir) {
+		baseDir = dir;
+	}
+
 	/**
 	 * Empties/creates the directory. Synonym with {@link #setUp()}
 	 */
