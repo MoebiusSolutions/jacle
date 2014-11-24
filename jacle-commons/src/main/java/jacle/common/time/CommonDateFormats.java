@@ -1,7 +1,10 @@
 package jacle.common.time;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.google.common.base.Throwables;
 
 public class CommonDateFormats {
 
@@ -73,7 +76,37 @@ public class CommonDateFormats {
 		return getFormatToMillis().format(date);
 	}
 
+   /**
+     * Parses a string of the following format to a {@link Date}:</p>
+     * <code>
+     * yyyy-MM-dd
+     * </code>
+     */
+  	public static Date parseFromDays(String date) {
+		return parse(getFormatToDays(), date);
+	}
+
     /**
+     * Parses a string of the following format to a {@link Date}:</p>
+     * <code>
+     * yyyy-MM-dd HH:mm:ss
+     * </code>
+     */
+	public static Date parseFromSecs(String date) {
+		return parse(getFormatToSecs(), date);
+	}
+
+    /**
+     * Parses a string of the following format to a {@link Date}:</p>
+     * <code>
+     * yyyy-MM-dd HH:mm:ss.SSS
+     * </code>
+     */
+	public static Date parseFromMillis(String date) {
+		return parse(getFormatToMillis(), date);
+	}
+
+	/**
      * Returns a date format to the resolution of days, for use in filenames:</p>
      * <code>
      * yyyy-MM-dd
@@ -131,5 +164,44 @@ public class CommonDateFormats {
      */
 	public static String formatToMillisForFilename(Date date) {
 		return getFormatToMillisForFilename().format(date);
+	}
+
+
+    /**
+     * Parses a string of the following, filename-friend format to a {@link Date}:</p>
+     * <code>
+     * yyyy-MM-dd
+     * </code>
+     */
+  	public static Date parseFromDaysForFilename(String date) {
+  		return parse(getFormatToDaysForFilename(), date);
+	}
+
+    /**
+     * Parses a string of the following, filename-friend format to a {@link Date}:</p>
+     * <code>
+     * yyyy-MM-dd_HH-mm-ss
+     * </code>
+     */
+	public static Date parseFromSecsForFilename(String date) {
+  		return parse(getFormatToSecsForFilename(), date);
+	}
+
+    /**
+     * Parses a string of the following, filename-friend format to a {@link Date}:</p>
+     * <code>
+     * yyyy-MM-dd_HH-mm-ss-SSS
+     * </code>
+     */
+	public static Date parseFromMillisForFilename(String date) {
+  		return parse(getFormatToMillisForFilename(), date);
+	}
+
+    private static Date parse(SimpleDateFormat format, String date) {
+		try {
+			return format.parse(date);
+		} catch (ParseException e) {
+			throw Throwables.propagate(e);
+		}
 	}
 }
