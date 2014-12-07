@@ -136,10 +136,19 @@ Finally, deploy the following files from the build server to [Artifactory](https
 
 ## Revision History
 
-### jacle-1.6
+### jacle-1.8
+
+* Added:
+    * JUnitFiles(File) constructor
+    * CommonDateFormats.parse...() methods
+    * StringBuilderExt
+
+### jacle-1.7
 
 * Added:
     * FilesExt.append()
+
+### jacle-1.6
 
 * Added:
     * JavaUtil.getSimpleFullName()
