@@ -1,5 +1,7 @@
 package jacle.common.io;
 
+import jacle.common.io.dir.DirUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -293,6 +295,33 @@ public class FilesExt {
 	}
 
 	/**
+	 * Copies the contents of <code>source</code> to <code>destination</code>
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static void copyDir(File source, File destination) {
+		try {
+			DirUtils.I.copy(source.toPath(), destination.toPath());
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to copy dir from [%s] to [%s]", source, destination), e);
+		}
+	}
+	
+	/**
+	 * Copies the contents of <code>source</code> to <code>destination</code>,
+	 * then deletes the contents of <code>source</code>.
+	 * 
+	 * @throws RuntimeIOException
+	 */
+	public static void moveDirByCopy(File source, File destination) {
+		try {
+			DirUtils.I.move(source.toPath(), destination.toPath());
+		} catch (Exception e) {
+			throw new RuntimeIOException(String.format("Failed to move dir from [%s] to [%s]", source, destination), e);
+		}
+	}
+	
+	/**
 	 * Identical to
 	 * {@link java.nio.file.Files#walkFileTree(Path, Set, int, FileVisitor)},
 	 * but wraps the {@link IOException} in a descriptive
@@ -467,4 +496,6 @@ public class FilesExt {
 	public static File getRelativeFile(File baseDir, File targetFile) throws FileNotContainedInException, FileNotFoundException, RuntimeIOException {
 		return new File(getRelativePath(baseDir, targetFile));
 	}
+
+
 }
