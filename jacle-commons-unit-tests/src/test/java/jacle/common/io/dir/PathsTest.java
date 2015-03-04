@@ -169,6 +169,6 @@ public class PathsTest {
 	 * Returns the provided path with the platform-specific slash
 	 */
     private static String normalize(String path) {
-    	return path.replaceAll("[\\\\/]", File.pathSeparator);
+    	return path.replaceAll("[\\\\/]", File.separator);
     }
 }
