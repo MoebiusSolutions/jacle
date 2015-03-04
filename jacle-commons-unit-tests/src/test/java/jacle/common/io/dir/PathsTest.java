@@ -60,8 +60,8 @@ public class PathsTest {
         Path path1 = Paths.get("bar/baz");
         Path resolved = longParentPath.resolve(path1);
         Path relative = longParentPath.relativize(resolved);
-        assertThat(resolved.toString(),is("/usr/local/lib/foo/bar/baz"));
-        assertThat(relative.toString(),is("bar/baz"));
+        assertThat(resolved.toString(),is(normalize("/usr/local/lib/foo/bar/baz")));
+        assertThat(relative.toString(),is(normalize("bar/baz")));
     }
     
     @Test
@@ -75,7 +75,7 @@ public class PathsTest {
         Path basePath = Paths.get("/usr/local");
         String relativePath = "lib/hadoop";
         Path resolved = basePath.resolve(relativePath);
-        assertThat(resolved.toString(),is("/usr/local/lib/hadoop"));
+        assertThat(resolved.toString(),is(normalize("/usr/local/lib/hadoop")));
     }
     
     @Test
@@ -83,7 +83,7 @@ public class PathsTest {
         Path basePath = Paths.get("/usr/local");
         Path relativePath = Paths.get("/lib/hadoop");
         Path resolved = basePath.relativize(relativePath);
-        assertThat(resolved.toString(),is("../../lib/hadoop"));
+        assertThat(resolved.toString(),is(normalize("../../lib/hadoop")));
     }
     
     @Test
@@ -92,7 +92,7 @@ public class PathsTest {
         Path p2 = Paths.get("/usr/local/lib");
         Path p3 = Paths.get("/Users");
         Path p5 = p3.resolve(p.relativize(p2));
-        assertThat(p5.toString(),is("/Users/local/lib"));
+        assertThat(p5.toString(),is(normalize("/Users/local/lib")));
     }
 
 
@@ -107,7 +107,7 @@ public class PathsTest {
         Path path = Paths.get("/parent/child1");
         Path sibling = Paths.get("child2");
         Path resolved = path.resolveSibling(sibling);
-        assertThat(resolved.toString(),is("/parent/child2"));
+        assertThat(resolved.toString(),is(normalize("/parent/child2")));
     }
     
     @Test
@@ -115,7 +115,7 @@ public class PathsTest {
         Path base = Paths.get("/parent/foo");
         Path sibling = Paths.get("bar");
         Path resolvedSibling = base.resolveSibling(sibling);
-        assertThat(resolvedSibling.toString(),is("/parent/bar"));
+        assertThat(resolvedSibling.toString(),is(normalize("/parent/bar")));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class PathsTest {
         Path path = Paths.get("/Users/bbejeck");
         Path root = path.getRoot();
         assertNotNull(root);
-        assertThat(root.toString(),is("/"));
+        assertThat(root.toString(),is(normalize("/")));
     }
     
     @Test
@@ -134,7 +134,7 @@ public class PathsTest {
         Path baz = bar.resolve("baz");
         assertThat(baz.toString(),is("/usr/foo/bar/baz"));
         Path relative1 = base.relativize(baz);
-        assertThat(relative1.toString(),is("foo/bar/baz"));
+        assertThat(relative1.toString(),is(normalize("foo/bar/baz")));
     }
 
     @Test
@@ -150,18 +150,25 @@ public class PathsTest {
         Path path = Paths.get("/Users/bbejeck");
         Path resolved = path.resolve("/dev");
         assertThat(resolved.isAbsolute(),is(true));
-        assertThat(resolved.toString(),is("/dev"));
+        assertThat(resolved.toString(),is(normalize("/dev")));
     }
     
     @Test
     public void testConvertPathToFile(){
         File file = Paths.get("/Users","bbejeck","dev").toFile();
-        assertThat(file.getAbsolutePath(),is("/Users/bbejeck/dev"));
+        assertThat(file.getAbsolutePath(),is(normalize("/Users/bbejeck/dev")));
     }
 
     @Test
     public void testPathIsDirectory(){
         Path path = Paths.get("src/test/resources/");
         assertThat("resources",is(path.getFileName().toString()));
+    }
+
+    /**
+	 * Returns the provided path with the platform-specific slash
+	 */
+    private static String normalize(String path) {
+    	return path.replaceAll("[\\\\/]", File.pathSeparator);
     }
 }
