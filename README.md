@@ -136,6 +136,13 @@ Finally, deploy the following files from the build server to [Artifactory](https
 
 ## Revision History
 
+### jacle-1.9
+
+* Added:
+    * FilesExt.copyDir()
+    * FilesExt.moveDirByCopy()
+    * DirUtils (from github.com/bbejeck/Java-7/)
+
 ### jacle-1.8
 
 * Added:
