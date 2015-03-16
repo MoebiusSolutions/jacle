@@ -136,6 +136,11 @@ Finally, deploy the following files from the build server to [Artifactory](https
 
 ## Revision History
 
+### jacle-1.10
+
+* Updated:
+    * Reduced Guava dedependency to 13.0
+
 ### jacle-1.9
 
 * Added:
