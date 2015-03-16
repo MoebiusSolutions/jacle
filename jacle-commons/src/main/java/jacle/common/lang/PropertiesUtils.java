@@ -4,7 +4,6 @@ import jacle.common.io.CloseablesExt;
 import jacle.common.io.FilesExt;
 import jacle.common.io.RuntimeIOException;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -94,9 +93,9 @@ public class PropertiesUtils {
 
 	public Properties fromResource(String resourceName) throws RuntimeIOException  {
 		final URL url = Resources.getResource(resourceName);
-		BufferedInputStream stream = null;
+		InputStream stream = null;
 		try {
-			stream = Resources.asByteSource(url).openBufferedStream();
+			stream = Resources.newInputStreamSupplier(url).getInput();
 			return fromStream(stream);
 		} catch (Exception e) {
 			throw new RuntimeIOException(String.format("Failed to read properties from resource [%s]", resourceName), e);
