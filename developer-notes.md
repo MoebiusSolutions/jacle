@@ -65,8 +65,8 @@ Update versions in pom files:
 
 Update the release notes in the README.md file:
 
-    $ vi README.md
-    $ git add README.md
+    $ vi release-notes.md
+    $ git add release-notes.md
     $ git commit -m 'Updated release notes'
 
 Push changes to the server:
