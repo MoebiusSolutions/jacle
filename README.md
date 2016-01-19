@@ -4,21 +4,30 @@
 
 This is a common base library with minimum dependencies that augments the basic JDK. Think Google's Guava. The modules include:
 
-__commons__
+__commons__ - The main base library
 
-*   The main base library
+    <dependency>
+        <groupId>com.github.MoebiusSolutions.jacle</groupId>
+        <artifactId>jacle-commons</artifactId>
+        <packaging>pom</packaging>
+        <version>1.11</version>
+    </dependency>
 
-__commons-test__
+__commons-test__ - A library specifically intended for use in unit testing (to be included at "test" scope)
 
-*   A library specifically intended for use in unit testing (to be included at "test" scope)
+    <dependency>
+        <groupId>com.github.MoebiusSolutions.jacle</groupId>
+        <artifactId>jacle-commons</artifactId>
+        <packaging>pom</packaging>
+        <version>1.11</version>
+        <scope>test</scope>
+    </dependency>
 
-__commons-unit-tests__
-
-*   The unit tests for commons (happens to use commons-test, so it was broken out). This is not intended for consumption by other products.
+__commons-unit-tests__ - The unit tests for commons (happens to use commons-test, so it was broken out). This is not intended for consumption by other products.
 
 ## More Info
 
-* [Developer Notes](developer-notes.md): If you intend to build/contribute.
+* [Developer Notes](developer-notes.md) - If you intend to build/contribute.
 * [Software License](license.md)
 * [Release Notes](release-notes.md)
 
