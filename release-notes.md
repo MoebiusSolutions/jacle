@@ -1,5 +1,13 @@
 # Revision History
 
+## jacle-1.11
+
+* Updated:
+    * Changed maven groupId to "com.github.MoebiusSolutions.jacle"
+* Internal Changes:
+	* Added build settings for travis ci
+	* Split up documentation
+
 ## jacle-1.10
 
 * Updated:
