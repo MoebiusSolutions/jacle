@@ -17,7 +17,7 @@ __commons-test__ - A library specifically intended for use in unit testing (to b
 
     <dependency>
         <groupId>com.github.MoebiusSolutions.jacle</groupId>
-        <artifactId>jacle-commons</artifactId>
+        <artifactId>jacle-commons-test</artifactId>
         <packaging>pom</packaging>
         <version>1.11</version>
         <scope>test</scope>
