@@ -6,7 +6,8 @@
 	<artifactId>jacle-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>1.11</version>
-	<name>JACLE Parent POM</name>
+	<name>${project.artifactId}</name>
+	<description>JACLE Parent POM</description>
 	<url>https://github.com/MoebiusSolutions/jacle</url>
 
 	<licenses>
@@ -17,6 +18,21 @@
 			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
+
+	<scm>
+		<url>https://github.com/MoebiusSolutions/jacle</url>
+		<connection>scm:git:git://github.com/MoebiusSolutions/jacle.git</connection>
+		<developerConnection>scm:git:git@github.com:MoebiusSolutions/jacle.git</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>moesol</id>
+			<email>support@moesol.com</email>
+			<name>Moebius Solutions</name>
+			<url>www.moesol.com</url>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
