@@ -10,7 +10,7 @@ __commons__ - The main base library
         <groupId>com.github.MoebiusSolutions.jacle</groupId>
         <artifactId>jacle-commons</artifactId>
         <packaging>pom</packaging>
-        <version>1.11</version>
+        <version>${latest-version}</version>
     </dependency>
 
 __commons-test__ - A library specifically intended for use in unit testing (to be included at "test" scope)
@@ -19,7 +19,7 @@ __commons-test__ - A library specifically intended for use in unit testing (to b
         <groupId>com.github.MoebiusSolutions.jacle</groupId>
         <artifactId>jacle-commons-test</artifactId>
         <packaging>pom</packaging>
-        <version>1.11</version>
+        <version>${latest-version}</version>
         <scope>test</scope>
     </dependency>
 
