@@ -22,6 +22,9 @@ public class JUnitFiles {
 	/**
 	 * Creates a temporary directory for files named for the provided junit
 	 * class
+	 * 
+	 * @param junitClass
+	 *            The junit test class to create the directory for
 	 */
 	public JUnitFiles(Class<?> junitClass) {
 		this(junitClass.getName());
@@ -30,6 +33,9 @@ public class JUnitFiles {
 	/**
 	 * Creates a temporary directory for files named for the provided junit
 	 * class
+	 * 
+	 * @param junitClassName
+	 *            The junit test class to create the directory for
 	 */
 	public JUnitFiles(String junitClassName) {
 		this(new File("target/junit-temp/"+junitClassName));
@@ -37,6 +43,9 @@ public class JUnitFiles {
 	
 	/**
 	 * Creates a temporary directory for files in the specified directory
+	 * 
+	 * @param dir
+	 *            The base directory to work from
 	 */
 	public JUnitFiles(File dir) {
 		baseDir = dir;
@@ -67,6 +76,11 @@ public class JUnitFiles {
 	
 	/**
 	 * Return a {@link File} path within the temporary directory
+	 * 
+	 * @param relativePath
+	 *            The relative path within the temp directory
+	 * 
+	 * @return The result
 	 */
 	public File getFile(String relativePath) {
 		return new File(baseDir, relativePath);

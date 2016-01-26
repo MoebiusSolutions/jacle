@@ -3,9 +3,10 @@ package jacle.common.lang;
 import java.io.File;
 
 /**
- * Provides very general Java utility methods</p>
+ * Provides very general Java utility methods
+ * <p>
  * 
- * The default implementation is available as {@link #I}</p>
+ * The default implementation is available as {@link #I}
  * 
  * @author rkenney
  */
@@ -19,6 +20,8 @@ public interface JavaUtil {
 	/**
 	 * Returns the full qualified class name of the caller. E.g. "java.io.File". The big benefit of
 	 * this method is that it can be used even from static contexts.
+	 * 
+	 * @return The result
 	 */
 	public String getClassName();
 
@@ -28,6 +31,8 @@ public interface JavaUtil {
 	 * 
 	 * @param nestedDepth
 	 *            The number of additional call stack elements to walk down
+	 * 
+	 * @return The result
 	 */
 	public String getClassName(int nestedDepth);
 
@@ -35,7 +40,9 @@ public interface JavaUtil {
 	 * Returns the "simple name" (without package prefix) for the class
 	 * containing the method that invokes this method. This is similar to what
 	 * is returned by {@link Class#getSimpleName()}. The big benefit of
-	 * this method is that it can be used even from static contexts.</p>
+	 * this method is that it can be used even from static contexts.
+	 * 
+	 * @return The result
 	 */
 	public String getSimpleClassName();
 
@@ -45,16 +52,24 @@ public interface JavaUtil {
 	 * 
 	 * @param nestedDepth
 	 *            The number of additional call stack elements to walk down
+	 * 
+	 * @return The result
 	 */
 	public String getSimpleClassName(int nestedDepth);
 
 	/**
 	 * Returns a "simple name" (without package prefix) version of a class name
 	 * from fully qualified one. This is similar to what is returend by
-	 * {@link Class#getSimpleName()}.</p>
+	 * {@link Class#getSimpleName()}.
+	 * <p>
 	 * 
 	 * If the provided string does not match the format of a fully qualified
-	 * class name, the original string is returned.</p>
+	 * class name, the original string is returned.
+	 *
+	 * @param fullyQualifiedName
+	 *            The name to parse
+	 * 
+	 * @return The result
 	 */
 	public String getSimpleClassName(String fullyQualifiedName);
 
@@ -63,6 +78,8 @@ public interface JavaUtil {
 	 * trace. E.g. if called from within {@link File#getPath()}, this would
 	 * return "getPath". The big benefit of this method is that it can be used
 	 * even from static contexts.
+	 * 
+	 * @return The result
 	 */
 	public String getMethodName();
 
@@ -72,11 +89,15 @@ public interface JavaUtil {
 	 * 
 	 * @param nestedDepth
 	 *            The number of additional call stack elements to walk down
+	 * 
+	 * @return The result
 	 */
 	public String getMethodName(int nestedDepth);
 
 	/**
-	 * Returns the package name of the calling method.</p>
+	 * Returns the package name of the calling method.
+	 * 
+	 * @return The result
 	 */
 	public String getPackageName();
 
@@ -86,15 +107,23 @@ public interface JavaUtil {
 	 * 
 	 * @param nestedDepth
 	 *            The number of additional call stack elements to walk down
+	 * 
+	 * @return The result
 	 */
 	public String getPackageName(int nestedDepth);
 
 	/**
 	 * Returns the package name parsed from the provided fully qualified class
-	 * name.</p>
+	 * name.
+	 * <p>
 	 * 
 	 * If the provided string does not match the format of a fully qualified
-	 * class name, the original string is returned.</p>
+	 * class name, the original string is returned.
+	 *
+	 * @param fullyQualifiedName
+	 *            The name to parse
+	 * 
+	 * @return The result
 	 */
 	public String getPackageName(String fullyQualifiedName);
 
@@ -104,6 +133,8 @@ public interface JavaUtil {
 	 * methods will have identical signatures. In the case of nested and inner
 	 * classes, the returned string looks like
 	 * "ClassName$NestedClass.methodName()" or "ClassName$4.methodName()".
+	 * 
+	 * @return The result
 	 */
 	public String getSimpleFullName();
 
@@ -113,6 +144,8 @@ public interface JavaUtil {
 	 * 
 	 * @param nestedDepth
 	 *            The number of additional call stack elements to walk down
+	 * 
+	 * @return The result
 	 */
 	public String getSimpleFullName(int nestedDepth);
 }

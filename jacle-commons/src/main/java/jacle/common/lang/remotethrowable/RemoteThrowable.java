@@ -2,12 +2,12 @@ package jacle.common.lang.remotethrowable;
 
 /**
  * Represents a {@link Throwable} that was deserialized by
- * {@link RemoteThrowableSerializer}.</p>
+ * {@link RemoteThrowableSerializer}.
+ * <p>
  * 
- * Because we cannot arbitrarily instantiate
- * specific throwable types to reconstruct the original exception chain, we
- * instantiate all deserialized as this type, which works well enogh as the
- * "cause" of a new, local exception.</p>
+ * Because we cannot arbitrarily instantiate specific throwable types to
+ * reconstruct the original exception chain, we instantiate all deserialized as
+ * this type, which works well enogh as the "cause" of a new, local exception.
  * 
  * @author rkenney
  */

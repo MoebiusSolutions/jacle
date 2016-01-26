@@ -21,8 +21,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
 /**
- * Basic directory utils</p>
- * 
+ * Basic directory utils
+ * <p>
  * This class, and all classes in the child packages came from <a
  * href="https://github.com/bbejeck/Java-7/"
  * >https://github.com/bbejeck/Java-7/</a>, under the MIT license. This is most
@@ -43,7 +43,6 @@ public class DirUtils {
 	 *
 	 * @param path
 	 *            Base path to start from
-	 * @throws IOException
 	 */
 	public void clean(Path path) throws IOException {
 		validate(path);

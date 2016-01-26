@@ -38,6 +38,9 @@ public class JavaArgsBuilder {
 	 * Used to build a the command line necessary to execute a java process
 	 * using the classpaths of the current classloader from the specified main()
 	 * class.
+	 * 
+	 * @param mainClass
+	 * 	The java class to execute
 	 */
 	public JavaArgsBuilder(Class<?> mainClass) {
 		this.mainClass = mainClass.getName();
@@ -47,6 +50,9 @@ public class JavaArgsBuilder {
 	 * Used to build a the command line necessary to execute a java process
 	 * using the classpaths of the current classloader from the specified main()
 	 * class.
+	 * 
+	 * @param mainClass
+	 * 	The java class to execute
 	 */
 	public JavaArgsBuilder(String mainClass) {
 		this.mainClass = mainClass;
@@ -54,6 +60,11 @@ public class JavaArgsBuilder {
 
 	/**
 	 * Specifies the arguments to the main of the java process
+	 * 
+	 * @param args
+	 *            The args to add to the command
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder setArgs(String... args) {
 		this.args = args;
@@ -62,6 +73,11 @@ public class JavaArgsBuilder {
 
 	/**
 	 * Specifies a java system property (e.g. adds -D parameter to the jvm)
+	 * 
+	 * @param name
+	 *            The java property to add to the command
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder addJavaProperty(String name) {
 		this.systemProperties.put(name, null);
@@ -70,6 +86,13 @@ public class JavaArgsBuilder {
 
 	/**
 	 * Specifies a java system property (e.g. adds -D parameter to the jvm)
+	 * 
+	 * @param name
+	 *            The java property to add to the command
+	 * @param value
+	 *            The java property value to add
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder addJavaProperty(String name, String value) {
 		this.systemProperties.put(name, value);
@@ -77,7 +100,14 @@ public class JavaArgsBuilder {
 	}
 
 	/**
-	 * Sets the memory arguments of the JVM 
+	 * Sets the memory arguments of the JVM
+	 * 
+	 * @param initialJvmMB
+	 *            The initial memory in megabytes
+	 * @param maxJvmMB
+	 *            The maximum memory in megabytes
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder setMemory(int initialJvmMB, int maxJvmMB) {
 		this.initialJvmMB = initialJvmMB;
@@ -92,6 +122,8 @@ public class JavaArgsBuilder {
 	 * @param doSuspend
 	 *            Whether or not the debugging system should halt the process
 	 *            until a debug connection is established
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder setEnableJvmDebug(boolean doSuspend) {
 		this.doJvmDebug = true;
@@ -107,6 +139,8 @@ public class JavaArgsBuilder {
 	 *            until a debug connection is established
 	 * @param listenPort
 	 *            The port to listen for debug connections on
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder setEnableJvmDebug(boolean doSuspend, int listenPort) {
 		this.doJvmDebug = true;
@@ -119,6 +153,11 @@ public class JavaArgsBuilder {
 	 * Specifies Whether the builder should apped a fully qualified path to the
 	 * java executable if available (from the JAVA_HOME env variable). Defaults
 	 * to false.
+	 * 
+	 * @param doFullyQualify
+	 *            The flag value
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public JavaArgsBuilder setFullyQualifiedPath(boolean doFullyQualify) {
 		this.doFullyQualify = doFullyQualify;
@@ -127,6 +166,8 @@ public class JavaArgsBuilder {
 
 	/**
 	 * Returns the command line
+	 * 
+	 * @return The result
 	 */
 	public String[] build() {
 		LinkedList<String> cmd = new LinkedList<String>();

@@ -18,6 +18,8 @@ public class RemoteThrowableSerializer {
 
 	/**
 	 * Creates an instance that generates JSON with whitespace for readibility
+	 * 
+	 * @return The instance
 	 */
 	public static RemoteThrowableSerializer createPretty() {
 		return new RemoteThrowableSerializer(
@@ -37,6 +39,11 @@ public class RemoteThrowableSerializer {
 	/**
 	 * Serializes the throwable into a form that can be deserialized by
 	 * {@link #fromJson(String)}
+	 * 
+	 * @param t
+	 *            The {@link Throwable} to be serialized
+	 * 
+	 * @return json result
 	 */
 	public String toJson(Throwable t) {
 		ArrayList<ThrowablePojo> nestedThrowables = new ArrayList<ThrowablePojo>();
@@ -55,6 +62,11 @@ public class RemoteThrowableSerializer {
 	/**
 	 * Deserializes a throwable that was serialized by
 	 * {@link #toJson(Throwable)}
+	 * 
+	 * @param json
+	 *            Serialized {@link Throwable}
+	 * 
+	 * @return The deserialized {@link Throwable}
 	 */
 	public Throwable fromJson(String json) {
 		ThrowablePojo[] nestedThrowables = gson.fromJson(json, ThrowablePojo[].class);

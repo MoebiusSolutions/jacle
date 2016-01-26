@@ -27,6 +27,9 @@ public class MockTimeProvider implements TimeProvider {
 	
 	/**
 	 * Creates a mock time instance initialized to the provided time
+	 * 
+	 * @param date
+	 *            The initial time of the object
 	 */
 	public MockTimeProvider(Date date) {
 		this.currentTime = date;
@@ -34,6 +37,13 @@ public class MockTimeProvider implements TimeProvider {
 	
 	/**
 	 * Adds to the mock clock time
+	 * 
+	 * @param incrementCount
+	 *            The number of units to increment
+	 * @param incrementUnits
+	 *            The units to increment by
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date add(long incrementCount, TimeUnit incrementUnits) {
 		this.currentTime = new Date(this.currentTime.getTime() + incrementUnits.toMillis(incrementCount));
@@ -42,6 +52,10 @@ public class MockTimeProvider implements TimeProvider {
 
 	/**
 	 * Adds to the mock clock time
+	 * 
+	 * @param millis Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addMillis(long millis) {
 		return add(millis, TimeUnit.MILLISECONDS);
@@ -49,6 +63,10 @@ public class MockTimeProvider implements TimeProvider {
 
 	/**
 	 * Adds to the mock clock time
+	 * 
+	 * @param seconds Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addSeconds(long seconds) {
 		return add(seconds, TimeUnit.SECONDS);
@@ -56,6 +74,10 @@ public class MockTimeProvider implements TimeProvider {
 
 	/**
 	 * Adds to the mock clock time
+	 * 
+	 * @param minutes Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addMinutes(long minutes) {
 		return add(minutes, TimeUnit.MINUTES);
@@ -63,6 +85,10 @@ public class MockTimeProvider implements TimeProvider {
 
 	/**
 	 * Adds to the mock clock time
+	 * 
+	 * @param hours Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addHours(long hours) {
 		return add(hours, TimeUnit.HOURS);
@@ -72,6 +98,10 @@ public class MockTimeProvider implements TimeProvider {
 	 * Adds days to the mock clock time, according to a calendar. Note that this
 	 * means that the increment may not be the standard number of seconds (due
 	 * to leap seconds).
+	 * 
+	 * @param days Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addDaysByCalendar(int days) {
 		return addByCalendar(days, Calendar.DATE);
@@ -81,6 +111,10 @@ public class MockTimeProvider implements TimeProvider {
 	 * Adds days to the mock clock time, according to a calendar. Note that this
 	 * means that the increment may not be the standard number of days or seconds (due
 	 * to leap days and seconds).
+	 * 
+	 * @param weeks Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addWeeksByCalendar(int weeks) {
 		return addByCalendar(weeks, Calendar.WEEK_OF_YEAR);
@@ -90,6 +124,10 @@ public class MockTimeProvider implements TimeProvider {
 	 * Adds months to the mock clock time, according to a calendar. Note that this
 	 * means that the increment may not be the standard number of days or seconds (due
 	 * to leap days and seconds).
+	 * 
+	 * @param months Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
 	public Date addMonthsByCalendar(int months) {
 		return addByCalendar(months, Calendar.MONTH);
@@ -99,9 +137,13 @@ public class MockTimeProvider implements TimeProvider {
 	 * Adds years to the mock clock time, according to a calendar. Note that this
 	 * means that the increment may not be the standard number of days or seconds (due
 	 * to leap days and seconds).
+	 * 
+	 * @param years Duration to add
+	 * 
+	 * @return The time after incrementing this object
 	 */
-	public Date addYearsByCalendar(int days) {
-		return addByCalendar(days, Calendar.YEAR);
+	public Date addYearsByCalendar(int years) {
+		return addByCalendar(years, Calendar.YEAR);
 	}
 	
 	private Date addByCalendar(int count, int calendarUnit) {

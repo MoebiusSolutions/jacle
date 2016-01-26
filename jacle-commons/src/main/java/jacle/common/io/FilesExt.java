@@ -25,11 +25,11 @@ public class FilesExt {
 	 * Deletes all files and directories within the provided directory. This is
 	 * slightly different than Guava's deprecated implementation of this method,
 	 * in that this does not throw an exception if the target dir already does
-	 * not exist, and this has safer handling of symlinks by leveraging JDK
-	 * 7.</p>
+	 * not exist, and this has safer handling of symlinks by leveraging JDK 7.
+	 * <p>
 	 * 
-	 * Note that Guava deprecated this method with the following
-	 * explanation:</p>
+	 * Note that Guava deprecated this method with the following explanation:
+	 * <p>
 	 * 
 	 * "This method suffers from poor symlink detection and race conditions.
 	 * This functionality can be supported suitably only by shelling out to an
@@ -38,7 +38,8 @@ public class FilesExt {
 	 * a directory. Does not delete the directory itself. If the file argument
 	 * is a symbolic link or there is a symbolic link in the path leading to the
 	 * directory, this method will do nothing. Symbolic links within the
-	 * directory are not followed."</p>
+	 * directory are not followed."
+	 * <p>
 	 * 
 	 * @throws RuntimeIOException
 	 **/
@@ -73,10 +74,11 @@ public class FilesExt {
 	 * {@link #deleteDirectoryContents(File)}. This is slightly different than
 	 * Guava's deprecated implementation of this method, in that this does not
 	 * throw an exception if the target dir already does not exist, and this has
-	 * safer handling of symlinks by leveraging JDK 7.</p>
+	 * safer handling of symlinks by leveraging JDK 7.
+	 * <p>
 	 * 
-	 * Note that Guava deprecated this method with the following
-	 * explanation:</p>
+	 * Note that Guava deprecated this method with the following explanation:
+	 * <p>
 	 * 
 	 * "This method suffers from poor symlink detection and race conditions.
 	 * This functionality can be supported suitably only by shelling out to an
@@ -360,9 +362,11 @@ public class FilesExt {
 	 * <code>targetFile</code>. The two paths need not be in the same form
 	 * (canonical, relative, absolute, etc). However, if they are not, they must
 	 * both exist. Both paths must not point to the same directory. No "/"
-	 * prefix is included in the return; it's a relative path.</p>
+	 * prefix is included in the return; it's a relative path.
+	 * <p>
 	 * 
-	 * For example, if these parameters were provided:</p>
+	 * For example, if these parameters were provided:
+	 * <p>
 	 * 
 	 * <ul>
 	 * <li>baseDir: "some/base/path"</li>
@@ -370,12 +374,14 @@ public class FilesExt {
 	 * </ul>
 	 * 
 	 * ... the method would return "some/sub/path".
+	 * <p>
 	 * 
 	 * This method first attempts to compare the strings of the two paths
 	 * literally. This means that relative or non-canonical paths can be
 	 * compared, and if the <code>baseDir</code> is an exact prefix of the
 	 * <code>targetFile</code> path, a relative path will be returned (that may
-	 * or may not contain ".." or ".").</p>
+	 * or may not contain ".." or ".").
+	 * <p>
 	 * 
 	 * However, if the <code>baseDir</code> is not an exact prefix to the
 	 * <code>targetFile</code>, both paths will be converted to their canonical
@@ -386,13 +392,14 @@ public class FilesExt {
 	 * {@link FileNotContainedInException}. Otherwise, this method returns the
 	 * relative path from the <code>baseDir</code> to the
 	 * <code>targetFile</code>.
+	 * <p>
 	 * 
 	 * @throws FileNotContainedInException
 	 *             Thrown if <code>targetFile</code> does not contain
 	 *             <code>baseDir</code>. This exception is never thrown if this
 	 *             can't be decided conclusively. This exception is thrown when
 	 *             both paths point to the same file. E.g. the base path does
-	 *             not include the target path, it IS the target path.</p>
+	 *             not include the target path, it IS the target path.
 	 * 
 	 * @throws FileNotFoundException
 	 *             Thrown if and only if the two paths (<code>baseDir</code> and
@@ -403,7 +410,6 @@ public class FilesExt {
 	 *             . This exception is NOT thrown if both paths are the same
 	 *             form (both absolute, for example), and either does not exist,
 	 *             as simple textual comparison of the paths is still possible.
-	 *             <p>
 	 * 
 	 * @throws RuntimeIOException
 	 *             If anything else fails
@@ -445,9 +451,11 @@ public class FilesExt {
 	 * <code>targetFile</code>. The two paths need not be in the same form
 	 * (canonical, relative, absolute, etc). However, if they are not, they must
 	 * both exist. Both paths must not point to the same directory. No "/"
-	 * prefix is included in the return; it's a relative path.</p>
+	 * prefix is included in the return; it's a relative path.
+	 * <p>
 	 * 
-	 * For example, if these parameters were provided:</p>
+	 * For example, if these parameters were provided:
+	 * <p>
 	 * 
 	 * <ul>
 	 * <li>baseDir: "some/base/path"</li>
@@ -460,7 +468,8 @@ public class FilesExt {
 	 * literally. This means that relative or non-canonical paths can be
 	 * compared, and if the <code>baseDir</code> is an exact prefix of the
 	 * <code>targetFile</code> path, a relative path will be returned (that may
-	 * or may not contain ".." or ".").</p>
+	 * or may not contain ".." or ".").
+	 * <p>
 	 * 
 	 * However, if the <code>baseDir</code> is not an exact prefix to the
 	 * <code>targetFile</code>, both paths will be converted to their canonical
@@ -477,7 +486,7 @@ public class FilesExt {
 	 *             <code>baseDir</code>. This exception is never thrown if this
 	 *             can't be decided conclusively. This exception is thrown when
 	 *             both paths point to the same file. E.g. the base path does
-	 *             not include the target path, it IS the target path.</p>
+	 *             not include the target path, it IS the target path.
 	 * 
 	 * @throws FileNotFoundException
 	 *             Thrown if and only if the two paths (<code>baseDir</code> and
@@ -488,7 +497,6 @@ public class FilesExt {
 	 *             . This exception is NOT thrown if both paths are the same
 	 *             form (both absolute, for example), and either does not exist,
 	 *             as simple textual comparison of the paths is still possible.
-	 *             <p>
 	 * 
 	 * @throws RuntimeIOException
 	 *             If anything else fails
