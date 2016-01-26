@@ -5,7 +5,7 @@
 	<groupId>com.github.MoebiusSolutions.jacle</groupId>
 	<artifactId>jacle-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.12-SNAPSHOT</version>
+	<version>1.12</version>
 	<name>${project.artifactId}</name>
 	<description>JACLE Parent POM</description>
 	<url>https://github.com/MoebiusSolutions/jacle</url>

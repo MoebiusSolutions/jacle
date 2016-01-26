@@ -1,5 +1,10 @@
 # Revision History
 
+## jacle-1.12
+
+* Updated:
+    * Added javadoc jar generation
+
 ## jacle-1.11
 
 * Updated:
