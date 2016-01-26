@@ -3,6 +3,11 @@ package jacle.common.lang;
 /**
  * A generic key/value object
  * 
+ * @param <K>
+ *            The key type
+ * @param <V>
+ *            The value type
+ * 
  * @author rkenney
  */
 public class KeyValue<K,V> {
@@ -22,7 +27,12 @@ public class KeyValue<K,V> {
 	}
 
 	/**
-	 * Non-void return provided for fluent style programming (e.g. returns this)
+	 * Sets the key
+	 * 
+	 * @param key
+	 *            The key
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public KeyValue<K, V> setKey(K key) {
 		this.key = key;
@@ -34,7 +44,12 @@ public class KeyValue<K,V> {
 	}
 
 	/**
-	 * Non-void return provided for fluent style programming (e.g. returns this)
+	 * Sets the value
+	 * 
+	 * @param value
+	 *            The value
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public KeyValue<K, V> setValue(V value) {
 		this.value = value;

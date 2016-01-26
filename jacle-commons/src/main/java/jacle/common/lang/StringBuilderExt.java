@@ -14,6 +14,11 @@ public class StringBuilderExt {
 	/**
 	 * Appends an object to the buffer. Identical to
 	 * {@link StringBuilder#append(Object)}.
+	 * 
+	 * @param object
+	 *            The object to append
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public StringBuilderExt append(Object object) {
 		buffer.append(object);
@@ -23,6 +28,13 @@ public class StringBuilderExt {
 	/**
 	 * Appends a formatted string. Method syntax is identical to
 	 * {@link String#format(String, Object...)}.
+	 * 
+	 * @param format
+	 *            Format string
+	 * @param args
+	 *            Format string args
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public StringBuilderExt appendF(String format, Object... args) {
 		buffer.append(String.format(format, args));
@@ -32,6 +44,11 @@ public class StringBuilderExt {
 	/**
 	 * Appends a formatted string. Method syntax is identical to
 	 * {@link String#format(String, Object...)}.
+	 * 
+	 * @param format
+	 *            Format string (with no args)
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public StringBuilderExt appendF(String format) {
 		buffer.append(String.format(format));
@@ -47,7 +64,7 @@ public class StringBuilderExt {
 	}
 	
 	/** 
-	 * Returns the built string
+	 * @return The constructed string
 	 */
 	@Override
 	public String toString() {

@@ -17,150 +17,222 @@ public class CommonDateFormats {
     public static final String FORMAT_TO_MILLIS_FOR_FILE = "yyyy-MM-dd_HH-mm-ss-SSS"; 
 
     /**
-     * Returns a date format to the resolution of days:</p>
-     * <code>
-     * yyyy-MM-dd
-     * </code>
-     */
+	 * Returns a date format to the resolution of days:
+	 * <p>
+	 * <code>
+	 * yyyy-MM-dd
+	 * </code>
+	 * 
+	 * @return The result
+	 */
     public static SimpleDateFormat getFormatToDays() {
     	return new SimpleDateFormat(FORMAT_TO_DAYS);
     }
 
     /**
-     * Returns a date format to the resolution of seconds:</p>
+     * Returns a date format to the resolution of seconds:
+	 * <p>
      * <code>
      * yyyy-MM-dd HH:mm:ss
      * </code>
+	 * 
+	 * @return The result
      */
     public static SimpleDateFormat getFormatToSecs() {
     	return new SimpleDateFormat(FORMAT_TO_SECS);
     }
 
     /**
-     * Returns a date format to the resolution of milliseconds:</p>
+     * Returns a date format to the resolution of milliseconds:
+	 * <p>
      * <code>
      * yyyy-MM-dd HH:mm:ss.SSS
      * </code>
+	 * 
+	 * @return The result
      */
     public static SimpleDateFormat getFormatToMillis() {
     	return new SimpleDateFormat(FORMAT_TO_MILLIS);
     }
 
     /**
-     * Formats a {@link Date} to the resolution of days:</p>
-     * <code>
-     * yyyy-MM-dd
-     * </code>
-     */
+	 * Formats a {@link Date} to the resolution of days:
+	 * <p>
+	 * <code>
+	 * yyyy-MM-dd
+	 * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
+	 */
   	public static String formatToDays(Date date) {
 		return getFormatToDays().format(date);
 	}
 
     /**
-     * Formats a {@link Date} to the resolution of seconds:</p>
+     * Formats a {@link Date} to the resolution of seconds:
+	 * <p>
      * <code>
      * yyyy-MM-dd HH:mm:ss
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static String formatToSecs(Date date) {
 		return getFormatToSecs().format(date);
 	}
 
     /**
-     * Formats a {@link Date} to the resolution of milliseconds:</p>
+     * Formats a {@link Date} to the resolution of milliseconds:
+	 * <p>
      * <code>
      * yyyy-MM-dd HH:mm:ss.SSS
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static String formatToMillis(Date date) {
 		return getFormatToMillis().format(date);
 	}
 
    /**
-     * Parses a string of the following format to a {@link Date}:</p>
+     * Parses a string of the following format to a {@link Date}:
+	 * <p>
      * <code>
      * yyyy-MM-dd
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
   	public static Date parseFromDays(String date) {
 		return parse(getFormatToDays(), date);
 	}
 
     /**
-     * Parses a string of the following format to a {@link Date}:</p>
+     * Parses a string of the following format to a {@link Date}:
+	 * <p>
      * <code>
      * yyyy-MM-dd HH:mm:ss
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static Date parseFromSecs(String date) {
 		return parse(getFormatToSecs(), date);
 	}
 
     /**
-     * Parses a string of the following format to a {@link Date}:</p>
+     * Parses a string of the following format to a {@link Date}:
+	 * <p>
      * <code>
      * yyyy-MM-dd HH:mm:ss.SSS
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static Date parseFromMillis(String date) {
 		return parse(getFormatToMillis(), date);
 	}
 
 	/**
-     * Returns a date format to the resolution of days, for use in filenames:</p>
+     * Returns a date format to the resolution of days, for use in filenames:
+	 * <p>
      * <code>
      * yyyy-MM-dd
      * </code>
+	 * 
+	 * @return The result
      */
     public static SimpleDateFormat getFormatToDaysForFilename() {
     	return new SimpleDateFormat(FORMAT_TO_DAYS_FOR_FILE);
     }
 
     /**
-     * Returns a date format to the resolution of seconds, for use in filenames:</p>
+     * Returns a date format to the resolution of seconds, for use in filenames:
+	 * <p>
      * <code>
      * yyyy-MM-dd_HH-mm-ss
      * </code>
+	 * 
+	 * @return The result
      */
     public static SimpleDateFormat getFormatToSecsForFilename() {
     	return new SimpleDateFormat(FORMAT_TO_SECS_FOR_FILE);
     }
 
     /**
-     * Returns a date format to the resolution of milliseconds, for use in filenames:</p>
+     * Returns a date format to the resolution of milliseconds, for use in filenames:
+	 * <p>
      * <code>
      * yyyy-MM-dd_HH-mm-ss-SSS
      * </code>
+	 * 
+	 * @return The result
      */
     public static SimpleDateFormat getFormatToMillisForFilename() {
     	return new SimpleDateFormat(FORMAT_TO_MILLIS_FOR_FILE);
     }
 
     /**
-     * Formats a {@link Date} to the resolution of days, for use in filenames:</p>
+     * Formats a {@link Date} to the resolution of days, for use in filenames:
+	 * <p>
      * <code>
      * yyyy-MM-dd
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
   	public static String formatToDaysForFilename(Date date) {
 		return getFormatToDaysForFilename().format(date);
 	}
 
     /**
-     * Formats a {@link Date} to the resolution of seconds, for use in filenames:</p>
+     * Formats a {@link Date} to the resolution of seconds, for use in filenames:
+	 * <p>
      * <code>
      * yyyy-MM-dd_HH-mm-ss
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static String formatToSecsForFilename(Date date) {
 		return getFormatToSecsForFilename().format(date);
 	}
 
     /**
-     * Formats a {@link Date} to the resolution of milliseconds, for use in filenames:</p>
+     * Formats a {@link Date} to the resolution of milliseconds, for use in filenames:
+	 * <p>
      * <code>
      * yyyy-MM-dd_HH-mm-ss-SSS
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static String formatToMillisForFilename(Date date) {
 		return getFormatToMillisForFilename().format(date);
@@ -168,30 +240,48 @@ public class CommonDateFormats {
 
 
     /**
-     * Parses a string of the following, filename-friend format to a {@link Date}:</p>
+     * Parses a string of the following, filename-friend format to a {@link Date}:
+	 * <p>
      * <code>
      * yyyy-MM-dd
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
   	public static Date parseFromDaysForFilename(String date) {
   		return parse(getFormatToDaysForFilename(), date);
 	}
 
     /**
-     * Parses a string of the following, filename-friend format to a {@link Date}:</p>
+     * Parses a string of the following, filename-friend format to a {@link Date}:
+	 * <p>
      * <code>
      * yyyy-MM-dd_HH-mm-ss
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static Date parseFromSecsForFilename(String date) {
   		return parse(getFormatToSecsForFilename(), date);
 	}
 
     /**
-     * Parses a string of the following, filename-friend format to a {@link Date}:</p>
+     * Parses a string of the following, filename-friend format to a {@link Date}:
+	 * <p>
      * <code>
      * yyyy-MM-dd_HH-mm-ss-SSS
      * </code>
+	 * 
+	 * @param date
+	 *            The date to format
+	 * 
+	 * @return The result
      */
 	public static Date parseFromMillisForFilename(String date) {
   		return parse(getFormatToMillisForFilename(), date);

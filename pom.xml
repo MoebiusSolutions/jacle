@@ -5,8 +5,9 @@
 	<groupId>com.github.MoebiusSolutions.jacle</groupId>
 	<artifactId>jacle-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.11</version>
-	<name>JACLE Parent POM</name>
+	<version>1.12</version>
+	<name>${project.artifactId}</name>
+	<description>JACLE Parent POM</description>
 	<url>https://github.com/MoebiusSolutions/jacle</url>
 
 	<licenses>
@@ -17,6 +18,21 @@
 			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
+
+	<scm>
+		<url>https://github.com/MoebiusSolutions/jacle</url>
+		<connection>scm:git:git://github.com/MoebiusSolutions/jacle.git</connection>
+		<developerConnection>scm:git:git@github.com:MoebiusSolutions/jacle.git</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>moesol</id>
+			<email>support@moesol.com</email>
+			<name>Moebius Solutions</name>
+			<url>www.moesol.com</url>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -106,7 +122,23 @@
 				</executions>
 			</plugin>
 
-		</plugins>
+		<!-- Builds javadoc-jar for easy viewing in IDEs -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-javadoc-plugin</artifactId>
+			<version>2.10.3</version>
+			<executions>
+				<execution>
+					<id>attach-javadocs</id>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+
+	    </plugins>
+
 	</build>
 
 	<modules>

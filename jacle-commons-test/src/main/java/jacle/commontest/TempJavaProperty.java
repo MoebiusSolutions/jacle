@@ -19,10 +19,15 @@ public class TempJavaProperty {
 
 	/**
 	 * The key/value to set (temporarily) on the system. If the value is null,
-	 * {@link Properties#remove(Object)} is called to remove the property.</p>
+	 * {@link Properties#remove(Object)} is called to remove the property.
+	 * <p>
 	 * 
-	 * The system properties are not affected until {@link #set()} is
-	 * called.</p>
+	 * The system properties are not affected until {@link #set()} is called.
+	 * 
+	 * @param key
+	 *            The key
+	 * @param value
+	 *            The value
 	 */
 	public TempJavaProperty(String key, String value) {
 		this.key = key;

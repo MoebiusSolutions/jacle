@@ -20,6 +20,16 @@ public class ExceptionExt {
 	 * Returns the first exception of the specified type found in the
 	 * "caused by" hierarchy of the provided exception. If not found, returns
 	 * null.
+	 * 
+	 * @param <T>
+	 *            The type to search for
+	 * 
+	 * @param exception
+	 *            The exception to search within
+	 * @param targetType
+	 *            The type to search for
+	 *
+	 * @return The matched inner exception
 	 */
 	public <T> T getCauseOfType(Throwable exception, Class<? extends T> targetType) {
 		Throwable cause = exception.getCause();

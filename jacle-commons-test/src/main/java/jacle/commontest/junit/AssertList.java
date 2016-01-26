@@ -10,6 +10,14 @@ public class AssertList {
 	 * Verifies that both lists are not null, contain the same number of
 	 * entries, and that each entry is either null in both lists or true under
 	 * the condition <code>expected.equals(actual)</code>.
+	 * 
+	 * @param <T>
+	 *            The type to be compared
+	 * 
+	 * @param expected
+	 *            The expected value
+	 * @param actual
+	 *            The actual value
 	 */
 	public static <T> void assertEquals(List<T> expected, List<T> actual) {
 		assertEquals(expected, actual,
@@ -22,6 +30,16 @@ public class AssertList {
 	 * Verifies that both lists are not null, contain the same number of
 	 * entries, and that each entry is either null in both lists or true under
 	 * the condition <code>equator.equals(expected, actual)</code>.
+	 * 
+	 * @param <T>
+	 *            The type to be compared
+	 * 
+	 * @param expected
+	 *            The expected value
+	 * @param actual
+	 *            The actual value
+	 * @param equator
+	 *            The object used for comparison
 	 */
 	public static <T> void assertEquals(List<T> expected, List<T> actual, Equator<T> equator) {
 		assertEquals(null, expected, actual, equator);
@@ -31,6 +49,18 @@ public class AssertList {
 	 * Verifies that both lists are not null, contain the same number of
 	 * entries, and that each entry is either null in both lists or true under
 	 * the condition <code>equator.equals(expected, actual)</code>.
+	 * 
+	 * @param <T>
+	 *            The type to be compared
+	 * 
+	 * @param failMessage
+	 *            The message to print on failure
+	 * @param expected
+	 *            The expected value
+	 * @param actual
+	 *            The actual value
+	 * @param equator
+	 *            The object used for comparison
 	 */
 	public static <T> void assertEquals(String failMessage, List<T> expected, List<T> actual, Equator<T> equator) {
 		if (expected == null) {

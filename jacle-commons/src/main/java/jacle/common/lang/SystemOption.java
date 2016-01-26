@@ -13,6 +13,13 @@ public class SystemOption {
 	 * Searches for the value of a configurable value by searching the system
 	 * properties (e.g. -D options) and then the environment variables. If
 	 * neither of these are found, the default value is returned.
+	 * 
+	 * @param key
+	 *            The key to search for
+	 * @param defaultValue
+	 *            The default value
+	 * 
+	 * @return The result
 	 */
 	public String getString(String key, String defaultValue) {
 		String returnValue = System.getProperty(key);
@@ -29,9 +36,14 @@ public class SystemOption {
 	/**
 	 * Searches for the value of a configurable value by searching the system
 	 * properties (e.g. -D options) and then the environment variables. If
-	 * neither of these are found, the default value is returned.</p>
+	 * neither of these are found, the default value is returned.
 	 * 
-	 * Returns the matched string as a {@link File}.</p>
+	 * @param key
+	 *            The key to search for
+	 * @param defaultValue
+	 *            The default value
+	 * 
+	 * @return The matched string as a {@link File}.
 	 */
 	public File getFile(String key, File defaultValue) {
 		String value = getString(key, null);

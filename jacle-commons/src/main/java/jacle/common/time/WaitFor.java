@@ -42,6 +42,13 @@ public class WaitFor implements Runnable {
 	 * Defines the duration of sleep between attempts of evaluating the
 	 * {@link Condition}. Defaults to {@link #DEFAULT_SLEEP_COUNT} and
 	 * {@link #DEFAULT_SLEEP_UNIT}. Setting the count to 0 skips the sleep.
+	 * 
+	 * @param sleepCount
+	 *            The number of units to sleep
+	 * @param sleepUnits
+	 *            The units to sleep by
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public WaitFor withSleep(long sleepCount, TimeUnit sleepUnits) {
 		this.sleepCount = sleepCount;
@@ -52,6 +59,13 @@ public class WaitFor implements Runnable {
 	/**
 	 * Defines the maximum time to retry the {@link Condition} before failing
 	 * with a {@link TimeoutException}. Defaults to no timeout.
+	 * 
+	 * @param timeoutCount
+	 *            The number of units defining the timeout
+	 * @param timeoutUnits
+	 *            The units defining the timeout
+	 * 
+	 * @return "this" (fluent setter)
 	 */
 	public WaitFor withTimeout(long timeoutCount, TimeUnit timeoutUnits) {
 		this.timeoutCount = timeoutCount;
@@ -76,7 +90,7 @@ public class WaitFor implements Runnable {
 	 * Sleeps for the duration specified by {@link #withSleep(long, TimeUnit)}
 	 * between executions of {@link Condition}. Guaranteed to execute the
 	 * {@link Condition} at least once, even if the
-	 * {@link #withTimeout(long, TimeUnit)} is set to zero.</p>
+	 * {@link #withTimeout(long, TimeUnit)} is set to zero.
 	 * 
 	 * @throws TimeoutException
 	 *             The {@link Condition} is not evaluated to <code>true</code>
