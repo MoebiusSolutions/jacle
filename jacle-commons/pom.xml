@@ -26,6 +26,12 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 
+        <!-- General purpose helper library -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
 	</dependencies>
 
 </project>

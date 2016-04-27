@@ -10,6 +10,11 @@ public class RuntimeInterruptedException extends RuntimeException {
 		this.interruptedException = e;
 	}
 
+	public RuntimeInterruptedException(String message, InterruptedException e) {
+		super(message, e);
+		this.interruptedException = e;
+	}
+
 	public InterruptedException getInterruptedException() {
 		return this.interruptedException;
 	}
