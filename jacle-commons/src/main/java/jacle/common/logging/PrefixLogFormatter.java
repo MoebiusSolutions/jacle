@@ -128,6 +128,9 @@ public class PrefixLogFormatter extends Formatter {
 	}
 
 	private boolean endsWithNewline(String message) {
+		if (message.length() < 1) {
+			return false;
+		}
 		// This covers Windows and Unix newlines
 		return message.charAt(message.length()-1) == '\n';
 	}

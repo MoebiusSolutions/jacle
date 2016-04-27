@@ -180,7 +180,39 @@ public class PrefixLogFormatterTest {
 		assertMatchesPattern(GENERIC_HEADER_PATTERN+" Testing multiple variable replacement one two three four five", outputLines[i++]);
 	}
 
-	
+	/**
+	 * Verifies that we can log empty messages when all headers are turned off.
+	 * This was an identified bug at one point.
+	 */
+	@Test
+	public void testEmptyMessageAndNoHeaders() throws Exception {
+		/*
+		 * Create logger with no headers
+		 */
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		PrefixLogFormatter formatter = new PrefixLogFormatter();
+		Logger logger = createLogger(output, formatter, JavaUtil.I.getMethodName());
+		formatter.withShowLogLevel(false).withShowLoggerName(false).withShowDate(false);
+		/*
+		 * Log some messages
+		 */
+		logger.info("First line");
+		logger.info("");
+		logger.info("Third line");
+		logger.info("");
+		/*
+		 * Verify the output preserves all newlines
+		 */
+		logger.getHandlers()[0].flush();
+		String outputString = new String(output.toByteArray());
+		String[] outputLines = UNIVERSAL_NEWLINE.split(outputString, -1);
+		int i = 0;
+		assertMatchesPattern("First line", outputLines[i++]);
+		assertMatchesPattern("", outputLines[i++]);
+		assertMatchesPattern("Third line", outputLines[i++]);
+		assertMatchesPattern("", outputLines[i++]);
+	}
+
 	private static void assertMatchesPattern(String regex, String message) {
 		Assert.assertTrue(String.format("Pattern '%s' does not match '%s'", regex, message), Pattern.matches(regex, message));
 	}
