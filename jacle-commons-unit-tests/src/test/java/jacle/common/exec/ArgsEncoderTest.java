@@ -26,7 +26,7 @@ public class ArgsEncoderTest {
     /**
      * Enable this during debugging for more output 
      */
-    private static final boolean SHOW_DEBUG = true;
+    private static final boolean SHOW_DEBUG = false;
 
     private static Boolean isWindows;
 
