@@ -1,5 +1,10 @@
 package jacle.common.exec;
 
+import jacle.common.exec.ArgsEncoderTest.ArgsProcessExecutor;
+import jacle.common.exec.ArgsEncoderTest.ValueEncoder;
+import jacle.common.exec.ProcessLauncher.Result;
+import jacle.common.io.RuntimeIOException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,12 +16,6 @@ import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import argvquote.EchoArgs;
-import jacle.common.exec.ArgsEncoderTest.ArgsProcessExecutor;
-import jacle.common.exec.ArgsEncoderTest.ValueEncoder;
-import jacle.common.exec.ProcessLauncher.Result;
-import jacle.common.io.RuntimeIOException;
 
 /**
  * This class simulates the way that Install4j launches child process and
