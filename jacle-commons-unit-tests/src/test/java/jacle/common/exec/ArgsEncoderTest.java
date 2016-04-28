@@ -20,19 +20,19 @@ import com.google.common.base.Joiner;
 
 public class ArgsEncoderTest {
 
-    private static final JUnitFiles files = new JUnitFiles(JavaUtil.I.getClassName());
+    static final JUnitFiles FILES = new JUnitFiles(JavaUtil.I.getClassName());
     private static final String NL = System.lineSeparator();
 
     /**
      * Enable this during debugging for more output 
      */
-    private static final boolean SHOW_DEBUG = false;
+    static final boolean SHOW_DEBUG = false;
 
-    private static Boolean isWindows;
+    private Boolean isWindows;
 
     @Before
     public void setUp() throws Exception {
-        files.before();
+        FILES.before();
     }
 
     /**
@@ -90,8 +90,8 @@ public class ArgsEncoderTest {
             @Override
             public String run(String[] args) {
                 // Write a batch script that calls another batch script with the given args
-                File echoScript = files.getFile("echo.bat");
-                File argsScript = files.getFile("test.bat");
+                File echoScript = FILES.getFile("echo.bat");
+                File argsScript = FILES.getFile("test.bat");
                 writeEchoArgsScript(echoScript, args.length);
                 writeEchoArgsScriptCaller(argsScript, echoScript, args);
                 return runScript(argsScript);
@@ -108,7 +108,7 @@ public class ArgsEncoderTest {
 	 * provided {@link ArgsProcessExecutor} is used to execute the child process
 	 * and collect it's output for parsing.
 	 */
-    public void doTestArgs(ValueEncoder encoder, ArgsProcessExecutor executor) throws Exception {
+    void doTestArgs(ValueEncoder encoder, ArgsProcessExecutor executor) throws Exception {
         TestCases testCases = new TestCases();
         // Test cases from qntm's post:
         // http://stackoverflow.com/questions/6427732/how-can-i-escape-an-arbitrary-string-for-use-as-a-command-line-argument-in-windo
@@ -183,7 +183,7 @@ public class ArgsEncoderTest {
         }
     }
 
-    private static class TestCases {
+    static class TestCases {
         ArrayList<TestCase> testCases = new ArrayList<>();
         
         void add(TestCase testCase) {
@@ -191,7 +191,7 @@ public class ArgsEncoderTest {
         }
     }
 
-    private static class TestCase {
+    static class TestCase {
         String[] args;
         
         public TestCase(String... args) {
@@ -199,11 +199,11 @@ public class ArgsEncoderTest {
         }
     }
 
-    private static interface ValueEncoder {
+    static interface ValueEncoder {
         String encode(String value);
     }
 
-    private static interface ArgsProcessExecutor {
+    static interface ArgsProcessExecutor {
         String run(String[] args);
     }
 
@@ -284,7 +284,7 @@ public class ArgsEncoderTest {
         return builder.toString();
     }
 
-    private static void ensureWindows() {
+    void ensureWindows() {
         if (isWindows == null) {
             isWindows = System.getProperty("os.name").startsWith("Windows");
         }
@@ -297,7 +297,7 @@ public class ArgsEncoderTest {
 	 * Just a wrapper method to avoid the @Deprecated flag on the constructor.
 	 */
     @SuppressWarnings("deprecation")
-	private static ProcessLauncher newProcessLauncher() {
+	static ProcessLauncher newProcessLauncher() {
     	return new ProcessLauncher();
     }
 }
