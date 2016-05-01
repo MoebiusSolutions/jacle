@@ -30,11 +30,11 @@ __commons-unit-tests__ - The unit tests for commons (happens to use commons-test
 This library is now availabe in the following maven repos: 
 
 * [Maven central](http://mvnrepository.com/) - The default maven repository
-** [Jacle's page](http://mvnrepository.com/artifact/com.github.MoebiusSolutions.jacle)
-** [versions available](http://mvnrepository.com/artifact/com.github.MoebiusSolutions.jacle/jacle-commons)
+    * [Jacle's page](http://mvnrepository.com/artifact/com.github.MoebiusSolutions.jacle)
+    * [versions available](http://mvnrepository.com/artifact/com.github.MoebiusSolutions.jacle/jacle-commons)
 * [JCenter](https://bintray.com/bintray/jcenter) - An alternative maven repository, hosted on [Bintray](https://bintray.com) 
-** The repo's [maven url](http://jcenter.bintray.com/)
-** [Jacle's page](https://bintray.com/moebiussolutions/JACLE/jacle/view) shows version's available
+    * The repo's [maven url](http://jcenter.bintray.com/)
+    * [Jacle's page](https://bintray.com/moebiussolutions/JACLE/jacle/view) shows version's available
 
 ## More Info
 
