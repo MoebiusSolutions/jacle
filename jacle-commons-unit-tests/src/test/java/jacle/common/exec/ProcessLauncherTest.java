@@ -3,6 +3,8 @@ package jacle.common.exec;
 import static org.junit.Assert.assertEquals;
 import jacle.common.exec.ProcessLauncher.Result;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -147,5 +149,27 @@ public class ProcessLauncherTest {
         assertEquals(88, result.getExitCode());
         assertEquals("(stdout) exit-with: 88", new String(result.getStdout()));
         assertEquals("(stderr) exit-with: 88", new String(result.getStderr()));
+    }
+
+    /**
+	 * For {@link ProcessLauncher#runToCompletion(ProcessBuilder)}, with
+	 * {@link ProcessLauncher#setStdin(byte[])} set, verifies the bytes are
+	 * provided to the child process via stdin.
+	 */
+    @Test
+    public void testRunToCompletion_setStdinBytes() throws Exception {
+        // Setup
+        String[] args = new JavaArgsBuilder(DemoProcess.class).setArgs("echo-stdin").build();
+        ProcessBuilder processBuilder = new ProcessBuilder(args);
+        
+        // Execute
+        @SuppressWarnings("deprecation")
+        ProcessLauncher launcher = new ProcessLauncher();
+        launcher.setStdin("first line\nsecondline\nthird line".getBytes(StandardCharsets.UTF_8));
+        Result result = launcher.runToCompletion(processBuilder);
+        
+        // Verify
+        assertEquals(0, result.getExitCode());
+        assertEquals("echo-stdin: first line\nsecondline\nthird line", new String(result.getStdout()));
     }
 }

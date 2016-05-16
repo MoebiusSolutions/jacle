@@ -1,7 +1,10 @@
 package jacle.common.exec;
 
+import jacle.common.io.CloseablesExt;
 import jacle.common.io.RuntimeIOException;
 import jacle.common.lang.RuntimeInterruptedException;
+
+import java.io.ByteArrayInputStream;
 
 public class ProcessLauncher {
 
@@ -31,6 +34,7 @@ public class ProcessLauncher {
 
     private boolean doEchoOutput;
     private boolean doThrowExceptionOnExit = true;
+    private byte[] stdinBytes;
 
     /**
      * @deprecated The class is not quite ready for prime time, and is subject
@@ -66,6 +70,17 @@ public class ProcessLauncher {
     }
 
     /**
+	 * If set, the provided bytes are provided to the child process via stdin.
+	 * Defaults to null.
+     * 
+     * @return this object (fluent setter)
+	 */
+    public ProcessLauncher setStdin(byte[] stdin) {
+        this.stdinBytes = stdin;
+        return this;
+    }
+
+    /**
      * Launches a process from the already-populated {@link ProcessBuilder} and
      * blocks until that process terminates.
      * 
@@ -88,6 +103,7 @@ public class ProcessLauncher {
     {
         ProcessStreamBuffers buffers;
         int exitCode;
+        ByteArrayInputStream stdinStream = null; 
 
         Process process = null;
         try {
@@ -96,6 +112,10 @@ public class ProcessLauncher {
             // Launch stream processing threads
             buffers = new ProcessStreamBuffers();
             buffers.setEchoOutput(this.doEchoOutput);
+            if (stdinBytes != null) {
+                stdinStream = new ByteArrayInputStream(stdinBytes);
+                buffers.setStdin(stdinStream);
+            }
             buffers.bind(process);
             
             try {
@@ -119,6 +139,8 @@ public class ProcessLauncher {
             throw e;
         } catch (Exception e) {
             throw new RuntimeIOException("Failed to launch process", e);
+        } finally {
+            CloseablesExt.closeQuietly(stdinStream);            
         }
     }
 }

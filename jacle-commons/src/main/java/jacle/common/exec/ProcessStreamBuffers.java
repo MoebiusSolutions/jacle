@@ -23,10 +23,11 @@ import org.apache.commons.io.output.TeeOutputStream;
 public class ProcessStreamBuffers implements Closeable {
 
     private ExecutorService threadPool;
-    private InputStream inputStream;
-    private InputStream errorStream;
+    private InputStream processInputStream;
+    private InputStream processErrorStream;
     private ByteArrayOutputStream stdoutBuffer = new ByteArrayOutputStream();
     private ByteArrayOutputStream stderrBuffer = new ByteArrayOutputStream();
+    private InputStream stdinStream;
     private boolean doEchoOutput;
 
     /**
@@ -41,6 +42,8 @@ public class ProcessStreamBuffers implements Closeable {
      * If set to <code>true</code>, the process output will be copied to
      * {@link System#out} and {@link System#err}, in addition to the internal
      * buffers. Defaults to <code>false</code>.
+     * 
+     * @return this object (fluent setter)
      */
     public ProcessStreamBuffers setEchoOutput(boolean doEcho) {
         doEchoOutput = doEcho;
@@ -48,20 +51,36 @@ public class ProcessStreamBuffers implements Closeable {
     }
 
     /**
+	 * If set, the provided stream is copied to the stdin stream of the process.
+	 * Defaults to null.
+	 * 
+	 * @return this object (fluent setter)
+	 */
+    public ProcessStreamBuffers setStdin(InputStream stdin) {
+        stdinStream = stdin;
+        return this;
+    }
+    
+    /**
      * Launches background threads that copy the stdout/stderr from the provided
      * process to internal buffers. The buffers are available from
      * {@link #getStdout()} and {@link #getStderr()} after {@link #waitFor()}.
+     * 
+     * @return this object (fluent setter)
      */
     public ProcessStreamBuffers bind(Process process) {
         this.threadPool = ExecutorsExt.I.newCachedThreadPool(JavaUtil.I.getSimpleClassName());
-        this.inputStream = process.getInputStream();
-        this.errorStream = process.getErrorStream();
+        this.processInputStream = process.getInputStream();
+        this.processErrorStream = process.getErrorStream();
         
         OutputStream so = doEchoOutput ? teeToSystemOut(stdoutBuffer) : stdoutBuffer;
         OutputStream se = doEchoOutput ? teeToSystemErr(stderrBuffer) : stderrBuffer;
-        
+
         threadPool.execute(new StreamCopierTask(process.getInputStream(), so));
         threadPool.execute(new StreamCopierTask(process.getErrorStream(), se));
+        if (stdinStream != null) {
+            threadPool.execute(new StreamCopierTask(stdinStream, process.getOutputStream()));
+        }
         // Stop any future tasks and terminate when current tasks complete
         threadPool.shutdown();
         return this;
@@ -91,8 +110,8 @@ public class ProcessStreamBuffers implements Closeable {
      * 
      */
     public void interrupt() {
-        CloseablesExt.closeQuietly(inputStream);
-        CloseablesExt.closeQuietly(errorStream);
+        CloseablesExt.closeQuietly(processInputStream);
+        CloseablesExt.closeQuietly(processErrorStream);
     }
 
     /**
