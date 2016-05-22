@@ -14,7 +14,7 @@ import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
-import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -123,7 +123,7 @@ public class CertUtilsTest {
         File newFile = files.newFile("child.der.crt");
         PKCS10CertificationRequest request = CertUtils.I.readSigningRequestFromPem(new File(examplesDir, "child.csr"));
         PublicKey publicKey = CertUtils.I.readPublicKeyFromPem(new File(examplesDir, "child.pem.key.pub"));
-        X509CertificateHolder caCert = CertUtils.I.readCertificateFromPem(new File(examplesDir, "ca.pem.crt"));
+        X509Certificate caCert = CertUtils.I.readCertificateFromPem(new File(examplesDir, "ca.pem.crt"));
         PrivateKey caKey = CertUtils.I.readPrivateKeyFromPem(new File(examplesDir, "ca.pem.key"));
         // NOTE: These dates need to match the dates set by openssl in the original file
         GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("zulu"));
@@ -133,7 +133,7 @@ public class CertUtilsTest {
         
         // Execute
         X509Certificate cert = CertUtils.I.createCertFromCSR()
-                .setCaInfo(caCert.getSubject(), caKey)
+                .setCaInfo(new X500Name(caCert.getSubjectDN().getName()), caKey)
                 .setPeriod(new Date(), new Date())
                 .setRequestInfo(request, publicKey)
                 .setPeriod(begin, end)

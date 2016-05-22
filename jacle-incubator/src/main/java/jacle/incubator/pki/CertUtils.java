@@ -25,10 +25,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
-import javax.crypto.EncryptedPrivateKeyInfo;
-
 import org.apache.commons.io.IOUtils;
-import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -60,9 +57,6 @@ import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
 
-import sun.misc.BASE64Encoder;
-import sun.security.provider.X509Factory;
-
 public class CertUtils {
 
     // Ensure the "BC" provider is defined
@@ -71,12 +65,15 @@ public class CertUtils {
     }
     
     /**
-     * sStatic accessor.
+     * Static accessor.
      */
     public static final CertUtils I = new CertUtils();
     
     private static final long YEARS_3_MS = 1000L * 60 * 60 * 24 * 364 * 3;
     
+    /**
+     * Generates a new, random public/private key pair.
+     */
     public KeyPair createKeyPair() {
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
@@ -87,6 +84,24 @@ public class CertUtils {
         }
     }
 
+    /**
+	 * Creates a new CA (self-signed) certificate.
+	 * 
+	 * @param keyPair
+	 *            The existing public/private key pair for the certificate.
+	 * @param subject
+	 *            The subject of the new certificate.
+	 * @param beginDate
+	 *            The earliest timestamp at which the certificate is effective.
+	 * @param endDate
+	 *            The timestamp at which the certificate expires.
+	 * @param certSerial
+	 *            The serial number to apply to the certificate. Note that all
+	 *            certificates from a single certificate authority must be
+	 *            guaranteed to have unique serial numbers, so this value needs
+	 *            to be managed externally. Since this is a self-signed CA, a
+	 *            value of 1 is generally acceptable here.
+	 */
     public X509Certificate createCaCertificate(KeyPair keyPair, X500Name subject, Date beginDate, Date endDate, int certSerial) {
         try {
             X509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(
@@ -99,7 +114,7 @@ public class CertUtils {
             
             BcX509ExtensionUtils extUtils = new BcX509ExtensionUtils();
             
-            SubjectPublicKeyInfo subjPubKeyInfo = getSubjectPublicKeyInfo(keyPair);
+            SubjectPublicKeyInfo subjPubKeyInfo = SubjectPublicKeyInfo.getInstance(keyPair.getPublic().getEncoded());
             SubjectKeyIdentifier subjectKey = extUtils.createSubjectKeyIdentifier(subjPubKeyInfo);
             AuthorityKeyIdentifier authorityKey = extUtils.createAuthorityKeyIdentifier(subjPubKeyInfo);
             builder.addExtension(Extension.subjectKeyIdentifier, false, subjectKey);
@@ -127,6 +142,14 @@ public class CertUtils {
         }
     }
     
+    /**
+	 * Creates a new Certificate Signing Request (CSR).
+	 * 
+	 * @param keyPair
+	 *            The existing public/private key pair owned by the requestor.
+	 * @param subject
+	 *            The subject of the requestor.
+	 */
     public PKCS10CertificationRequest createCSR(KeyPair keyPair, X500Name subject) {
         try {
             PKCS10CertificationRequestBuilder p10Builder =
@@ -139,10 +162,18 @@ public class CertUtils {
         }
     }
     
+    /**
+	 * Used to sign a CSR, which will result in a new certificate. This method
+	 * actually returns an instance of {@link CreateCertFromCSR}, which is used
+	 * to collect arguments before executing the certificate creation.
+	 */
     public CreateCertFromCSR createCertFromCSR() {
         return new CreateCertFromCSR(); 
     }
 
+    /**
+	 * Reads a private key from a PEM-encoded file.
+	 */
     public PrivateKey readPrivateKeyFromPem(File file) {
         FileReader reader = null;
         PEMParser parser = null;
@@ -159,6 +190,9 @@ public class CertUtils {
         }
     }
 
+    /**
+	 * Reads a public key from a PEM-encoded file.
+	 */
     public PublicKey readPublicKeyFromPem(File file) {
         FileReader reader = null;
         PEMParser parser = null;
@@ -175,6 +209,9 @@ public class CertUtils {
         }
     }
 
+    /**
+	 * Reads an CSR from a PEM-encoded file.
+	 */
     public PKCS10CertificationRequest readSigningRequestFromPem(File file) {
         FileReader reader = null;
         PEMParser parser = null;
@@ -190,14 +227,18 @@ public class CertUtils {
         }
     }
 
-    public X509CertificateHolder readCertificateFromPem(File file) {
+    /**
+	 * Reads an X509 certificate from a PEM-encoded file.
+	 */
+    public X509Certificate readCertificateFromPem(File file) {
         FileReader reader = null;
         PEMParser parser = null;
         try {
             reader = new FileReader(file);
             parser = new PEMParser(reader);
-            return (X509CertificateHolder) parser.readObject();
-        } catch (RuntimeException | IOException e) {
+            X509CertificateHolder holder = (X509CertificateHolder) parser.readObject();
+            return new JcaX509CertificateConverter().setProvider("BC").getCertificate(holder);
+        } catch (RuntimeException | IOException | GeneralSecurityException e) {
             throw new RuntimeException("Failed to load certficate from ["+file+"]", e);
         } finally {
             CloseablesExt.closeQuietly(parser);
@@ -205,6 +246,9 @@ public class CertUtils {
         }
     }
 
+    /**
+	 * Reads a Java keystore (JKS) from a file.
+	 */
     public KeyStore readKeyStore(File file, char[] password) {
         FileInputStream stream = null;
         try {
@@ -219,73 +263,64 @@ public class CertUtils {
         }
     }
 
-    // TODO [rkenney]: Rename related methods to "Pem"
+    /**
+	 * Writes a private key to disk, in DER format.
+	 */
     public void writeToDerFile(PrivateKey key, File file) {
         OutputStream stream = null;
         try {
             stream = new FileOutputStream(file);
             IOUtils.write(key.getEncoded(), stream);
         } catch (RuntimeException | IOException e) {
-            throw new RuntimeException("Failed to write key to ["+file+"]", e);
+            throw new RuntimeException("Failed to write key DER to ["+file+"]", e);
         } finally {
             CloseablesExt.closeQuietly(stream);
         }
     }
 
-    // TODO [rkenney]: Rename related methods to "Pem"
+    /**
+	 * Writes an X509 certificate to disk, in DER format.
+	 */
     public void writeToDerFile(X509Certificate cert, File file) {
         OutputStream stream = null;
         try {
             stream = new FileOutputStream(file);
             IOUtils.write(cert.getEncoded(), stream);
         } catch (RuntimeException | IOException | CertificateEncodingException e) {
-            throw new RuntimeException("Failed to write certificate to ["+file+"]", e);
+            throw new RuntimeException("Failed to write certificate DER to ["+file+"]", e);
         } finally {
             CloseablesExt.closeQuietly(stream);
         }
     }
 
-    public void writeToDerFile(EncryptedPrivateKeyInfo pkcs8, File file) {
-        OutputStream stream = null;
-        try {
-            stream = new FileOutputStream(file);
-            IOUtils.write(pkcs8.getEncoded(), stream);
-        } catch (RuntimeException | IOException e) {
-            throw new RuntimeException("Failed to write PKCS8 to ["+file+"]", e);
-        } finally {
-            CloseablesExt.closeQuietly(stream);
-        }
-    }
-
-    public void writeToPemFile(X509Certificate cert, File file) {
-        OutputStream stream = null;
-        PrintWriter writer = null;
-        try {
-            // TODO [rkenney]: Join this with writeToPemFile()
-            stream = new FileOutputStream(file);
-            writer = new PrintWriter(stream);
-            BASE64Encoder encoder = new BASE64Encoder();
-            writer.println(X509Factory.BEGIN_CERT);
-            writer.flush();
-            encoder.encodeBuffer(cert.getEncoded(), stream);
-            writer.println(X509Factory.END_CERT);
-            writer.flush();
-        } catch (RuntimeException | IOException | CertificateEncodingException e) {
-            throw new RuntimeException("Failed to write certificate to ["+file+"]", e);
-        } finally {
-            CloseablesExt.closeQuietly(writer);
-            CloseablesExt.closeQuietly(stream);
-        }
-    }
-
+    /**
+	 * Writes a private key to to disk, in PEM format.
+	 */
     public void writeToPemFile(PrivateKey key, File file) {
         writeToPemFile(PemType.PRIVATE_KEY, key.getEncoded(), file);
     }
 
+    /**
+	 * Writes a public key to to disk, in PEM format.
+	 */
     public void writeToPemFile(PublicKey key, File file) {
         writeToPemFile(PemType.PUBLIC_KEY, key.getEncoded(), file);
     }
 
+    /**
+	 * Writes an X509 certificate to disk, in PEM format.
+	 */
+    public void writeToPemFile(X509Certificate cert, File file) {
+        try {
+	        writeToPemFile(PemType.CERTIFICATE, cert.getEncoded(), file);
+	    } catch (CertificateEncodingException e) {
+	        throw new RuntimeException("Failed to write certificatet PEM to ["+file+"]", e);
+	    }
+    }
+
+    /**
+	 * Writes a CSR to disk, in PEM format.
+	 */
     public void writeToPemFile(PKCS10CertificationRequest request, File file) {
         try {
             writeToPemFile(PemType.CERTIFICATE_REQUEST, request.getEncoded(), file);
@@ -294,34 +329,9 @@ public class CertUtils {
         }
     }
 
-    public void writeKeyStore(KeyStore keystore, char[] password, File file) {
-        OutputStream stream = null;
-        try {
-            stream = new FileOutputStream(file);
-            keystore.store(stream, password);
-        } catch (RuntimeException | IOException | GeneralSecurityException e) {
-            throw new RuntimeException("Failed to write keystore to ["+file+"]", e);
-        } finally {
-            CloseablesExt.closeQuietly(stream);
-        }
-    }
-
-    public void writeToP12(X509Certificate cert, PrivateKey key, char[] password, File file) {
-        OutputStream stream = null;
-        try {
-            stream = new FileOutputStream(file);
-            KeyStore ks = KeyStore.getInstance("PKCS12", "BC");   
-            ks.load(null,null);
-            ks.setCertificateEntry(cert.getSerialNumber().toString(), cert);
-            ks.setKeyEntry(cert.getSerialNumber().toString(), key, password, new java.security.cert.Certificate[]{cert,cert});
-            ks.store(stream, password);
-        } catch (RuntimeException | IOException | GeneralSecurityException e) {
-            throw new RuntimeException("Failed to write PKCS12 to ["+file+"]", e);
-        } finally {
-            CloseablesExt.closeQuietly(stream);
-        }
-    }
-    
+    /**
+	 * Writes an arbitrary byte array to disk, in PEM format.
+	 */
     public void writeToPemFile(PemType pemType, byte[] bytes, File file) {
         PrintWriter writer = null;
         PemWriter pemWriter = null;
@@ -339,11 +349,52 @@ public class CertUtils {
         }
     }
 
-    private static SubjectPublicKeyInfo getSubjectPublicKeyInfo(KeyPair keyPair) {
-        return new SubjectPublicKeyInfo(
-                ASN1Sequence.getInstance(keyPair.getPublic().getEncoded()));
+    /**
+	 * Writes a {@link KeyStore} to disk.
+	 */
+    public void writeKeyStore(KeyStore keystore, char[] password, File file) {
+        OutputStream stream = null;
+        try {
+            stream = new FileOutputStream(file);
+            keystore.store(stream, password);
+        } catch (RuntimeException | IOException | GeneralSecurityException e) {
+            throw new RuntimeException("Failed to write keystore to ["+file+"]", e);
+        } finally {
+            CloseablesExt.closeQuietly(stream);
+        }
     }
 
+    /**
+	 * Writes a certificate, its full certificate chain, and its private key to
+	 * a P12/PFX file.
+	 * 
+	 * @param certChain
+	 *            The full certificate chain of the target certificate, in order
+	 *            from the target certificate to the root CA.
+	 * @param key
+	 *            The private key of the target certificate.
+	 * @param password
+	 *            The password to assign to the new P12 file.
+	 * @param file
+	 *            The file to create.
+	 */
+    public void writeToP12(X509Certificate[] certChain, PrivateKey key, char[] password, File file) {
+        OutputStream stream = null;
+        try {
+        	X509Certificate targetCert = certChain[0];
+            stream = new FileOutputStream(file);
+            KeyStore ks = KeyStore.getInstance("PKCS12", "BC");   
+            ks.load(null,null);
+            ks.setCertificateEntry(targetCert.getSerialNumber().toString(), targetCert);
+            ks.setKeyEntry(targetCert.getSerialNumber().toString(), key, password, certChain);
+            ks.store(stream, password);
+        } catch (RuntimeException | IOException | GeneralSecurityException e) {
+            throw new RuntimeException("Failed to write PKCS12 to ["+file+"]", e);
+        } finally {
+            CloseablesExt.closeQuietly(stream);
+        }
+    }
+    
     /**
      * Used to sign CSR, resulting in an X509 certificate. This is an
      * object instead of a method due to the number of arguments.
@@ -463,6 +514,7 @@ public class CertUtils {
     private static enum PemType {
         PRIVATE_KEY("PRIVATE KEY"),
         PUBLIC_KEY("PUBLIC KEY"),
+        CERTIFICATE("CERTIFICATE"),
         CERTIFICATE_REQUEST("CERTIFICATE REQUEST");
         
         private String value;
