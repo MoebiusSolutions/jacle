@@ -25,6 +25,15 @@ __commons-test__ - A library specifically intended for use in unit testing (to b
 
 __commons-unit-tests__ - The unit tests for commons (happens to use commons-test, so it was broken out). This is not intended for consumption by other products.
 
+__incubator__ - A holding place for utilies and sample code not quite polished enough for general consumption. This may pull in a wide range of dependencies.
+
+    <dependency>
+        <groupId>com.github.MoebiusSolutions.jacle</groupId>
+        <artifactId>jacle-incubator</artifactId>
+        <packaging>pom</packaging>
+        <version>${latest-version}</version>
+    </dependency>
+
 ## Downloading 
 
 This library is now availabe in the following maven repos: 

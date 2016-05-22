@@ -1,9 +1,10 @@
-package jacle.common.exec;
+package jacle.incubator.exec;
 
-import jacle.common.exec.ArgsEncoderTest.ArgsProcessExecutor;
-import jacle.common.exec.ArgsEncoderTest.ValueEncoder;
-import jacle.common.exec.ProcessLauncher.Result;
+import jacle.common.exec.JavaArgsBuilder;
 import jacle.common.io.RuntimeIOException;
+import jacle.incubator.exec.ArgsEncoderTest.ArgsProcessExecutor;
+import jacle.incubator.exec.ArgsEncoderTest.ValueEncoder;
+import jacle.incubator.exec.ProcessLauncher.Result;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -94,7 +95,7 @@ public class ArgsEncoderInstall4JTest {
                 } // ... end LaunchHelper.launchOnWindows()
                 
                 // Execute the top level cmd using our own mechanism
-                Result result = ArgsEncoderTest.newProcessLauncher().
+                Result result = new ProcessLauncher().
                 		setEchoOutput(ArgsEncoderTest.SHOW_DEBUG).
                 		runToCompletion(builder);
                 return new String(result.getStdout());

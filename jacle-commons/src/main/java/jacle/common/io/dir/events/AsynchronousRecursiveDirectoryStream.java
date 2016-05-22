@@ -23,7 +23,7 @@ public class AsynchronousRecursiveDirectoryStream implements DirectoryStream<Pat
     private boolean closed = false;
     private FutureTask<Void> pathTask;
     private Path startPath;
-    private Filter filter;
+    private Filter<Path> filter;
 
     public AsynchronousRecursiveDirectoryStream(Path startPath, String pattern) throws IOException {
         this.filter = FilterBuilder.buildGlobFilter(Objects.requireNonNull(pattern));
@@ -62,7 +62,7 @@ public class AsynchronousRecursiveDirectoryStream implements DirectoryStream<Pat
         };
     }
 
-    private void findFiles(final Path startPath, final Filter filter) {
+    private void findFiles(final Path startPath, final Filter<Path>  filter) {
         pathTask = new FutureTask<>(new Callable<Void>() {
             @Override
             public Void call() throws Exception {

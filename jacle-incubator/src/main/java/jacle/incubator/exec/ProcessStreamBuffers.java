@@ -1,4 +1,4 @@
-package jacle.common.exec;
+package jacle.incubator.exec;
 
 import jacle.common.io.CloseablesExt;
 import jacle.common.lang.JavaUtil;
@@ -30,12 +30,6 @@ public class ProcessStreamBuffers implements Closeable {
     private InputStream stdinStream;
     private boolean doEchoOutput;
 
-    /**
-     * @deprecated The class is not quite ready for prime time, and is subject
-     *             to change. I anticipate abstracting the multi-threaded stream
-     *             copying feature away from the internal buffering.
-     */
-    @Deprecated
     public ProcessStreamBuffers() {}
     
     /**

@@ -1,9 +1,10 @@
-package jacle.common.exec;
+package jacle.incubator.exec;
 
-import jacle.common.exec.ProcessLauncher.Result;
+import jacle.common.exec.JavaArgsBuilder;
 import jacle.common.io.FilesExt;
 import jacle.common.lang.JavaUtil;
 import jacle.commontest.JUnitFiles;
+import jacle.incubator.exec.ProcessLauncher.Result;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -55,7 +56,7 @@ public class ArgsEncoderTest {
             public String run(String[] args) {
                 JavaArgsBuilder javaArgs = new JavaArgsBuilder(EchoArgs.class);
                 javaArgs.setArgs(args);
-                Result result = newProcessLauncher().setEchoOutput(SHOW_DEBUG).runToCompletion(
+                Result result = new ProcessLauncher().setEchoOutput(SHOW_DEBUG).runToCompletion(
                         new ProcessBuilder(javaArgs.build()));
                 return new String(result.getStdout());
             }
@@ -251,7 +252,7 @@ public class ArgsEncoderTest {
     private static String runScript(File testScript) {
         ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", testScript.getName());
         builder.directory(testScript.getParentFile());
-        Result result = newProcessLauncher().setEchoOutput(SHOW_DEBUG).runToCompletion(builder);
+        Result result = new ProcessLauncher().setEchoOutput(SHOW_DEBUG).runToCompletion(builder);
         return new String(result.getStdout());
     }
 
@@ -291,13 +292,5 @@ public class ArgsEncoderTest {
         if (!isWindows) {
             throw new RuntimeException("This test will only function on Windows");
         }
-    }
-    
-    /**
-	 * Just a wrapper method to avoid the @Deprecated flag on the constructor.
-	 */
-    @SuppressWarnings("deprecation")
-	static ProcessLauncher newProcessLauncher() {
-    	return new ProcessLauncher();
     }
 }

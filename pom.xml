@@ -74,6 +74,18 @@
 				<version>1.9.0</version>
 				<scope>test</scope>
 			</dependency>
+			<!-- JACLE dependencies -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jacle-commons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>jacle-commons-test</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -150,6 +162,7 @@
 		<module>jacle-commons</module>
 		<module>jacle-commons-test</module>
 		<module>jacle-commons-unit-tests</module>
+		<module>jacle-incubator</module>
 	</modules>
 
 </project>

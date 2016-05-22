@@ -1,4 +1,4 @@
-package jacle.common.exec;
+package jacle.incubator.exec;
 
 import jacle.common.io.CloseablesExt;
 import jacle.common.io.RuntimeIOException;
@@ -36,11 +36,6 @@ public class ProcessLauncher {
     private boolean doThrowExceptionOnExit = true;
     private byte[] stdinBytes;
 
-    /**
-     * @deprecated The class is not quite ready for prime time, and is subject
-     *             to change.
-     */
-    @Deprecated
     public ProcessLauncher() {}
     
     /**
@@ -97,7 +92,6 @@ public class ProcessLauncher {
      *             Thrown if the action fails for any other, non-{@link Error}
      *             reason.
      */
-    @SuppressWarnings("deprecation") // Using an in-progress class
     public Result runToCompletion(ProcessBuilder processBuilder)
             throws RuntimeInterruptedException, RuntimeIOException, ProcessLauncherException
     {

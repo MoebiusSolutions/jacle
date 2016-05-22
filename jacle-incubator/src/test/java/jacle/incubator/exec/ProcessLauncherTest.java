@@ -1,7 +1,8 @@
-package jacle.common.exec;
+package jacle.incubator.exec;
 
 import static org.junit.Assert.assertEquals;
-import jacle.common.exec.ProcessLauncher.Result;
+import jacle.common.exec.JavaArgsBuilder;
+import jacle.incubator.exec.ProcessLauncher.Result;
 
 import java.nio.charset.StandardCharsets;
 
@@ -21,7 +22,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         Result result = launcher.runToCompletion(processBuilder);
         
@@ -42,7 +42,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         Result result = launcher.runToCompletion(processBuilder);
         
@@ -63,7 +62,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         Result result = launcher.runToCompletion(processBuilder);
         
@@ -83,7 +81,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         
         // Verify
@@ -111,7 +108,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         launcher.setThrowExceptionOnExit(true);
         
@@ -140,7 +136,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         launcher.setThrowExceptionOnExit(false);
         Result result = launcher.runToCompletion(processBuilder);
@@ -163,7 +158,6 @@ public class ProcessLauncherTest {
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         
         // Execute
-        @SuppressWarnings("deprecation")
         ProcessLauncher launcher = new ProcessLauncher();
         launcher.setStdin("first line\nsecondline\nthird line".getBytes(StandardCharsets.UTF_8));
         Result result = launcher.runToCompletion(processBuilder);
