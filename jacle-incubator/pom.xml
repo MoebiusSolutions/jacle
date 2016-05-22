@@ -12,6 +12,10 @@
 	<description>JACLE unpolished utilities</description>
 	<url>https://github.com/MoebiusSolutions/jacle</url>
 
+	<properties>
+		<bouncycastle-version>1.54</bouncycastle-version>
+	</properties>
+
 	<dependencies>
 
 		<dependency>
@@ -24,23 +28,17 @@
 			<artifactId>jacle-commons-test</artifactId>
 		</dependency>
 
-		<!-- Google's enhancements to the standard java libraries -->
+		<!-- PKI/Cryptography libraries  -->
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>${bouncycastle-version}</version>
 		</dependency>
-
-		<!-- JSON reader/writer library -->
 		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk15on</artifactId>
+			<version>${bouncycastle-version}</version>
 		</dependency>
-
-        <!-- General purpose helper library -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
 
 	</dependencies>
 

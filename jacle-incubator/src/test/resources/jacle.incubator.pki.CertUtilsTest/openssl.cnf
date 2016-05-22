@@ -1,0 +1,5 @@
+
+# NOTE: This entry is required to force the certificates
+# to X509 v3, which matches Java's implementation.
+[v3_req]
+subjectAltName=email:copy
