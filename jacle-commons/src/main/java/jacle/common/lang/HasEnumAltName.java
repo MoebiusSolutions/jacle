@@ -3,8 +3,6 @@ package jacle.common.lang;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import javax.annotation.Nonnull;
-
 /**
  * By apply this interface to {@link Enum} classes, you enable lookup of enum
  * values by an alternative name (via {@link #get(Class, String)}). This is
@@ -17,7 +15,6 @@ public interface HasEnumAltName {
 	 * Defines an alternative name for the enum value. This must be unique
 	 * across all values of a single enum class. May not be <code>null</code>.
 	 */
-	@Nonnull
 	String getAltName();
 	
 	/**
@@ -32,7 +29,6 @@ public interface HasEnumAltName {
 	 *             If the provided enum class does not the
 	 *             {@link HasEnumAltName} interface.
 	 */
-	@Nonnull
 	public static <T extends Enum<T>> T get(Class<T> enumType, String altName) {
 		return AltNameEnums.get(enumType, altName);
 	}

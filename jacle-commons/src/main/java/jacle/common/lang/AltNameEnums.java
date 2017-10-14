@@ -3,8 +3,6 @@ package jacle.common.lang;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.annotation.Nonnull;
-
 class AltNameEnums {
 
 	/**
@@ -32,7 +30,6 @@ class AltNameEnums {
 	 *             If the provided enum class does not the
 	 *             {@link HasEnumAltName} interface.
 	 */
-	@Nonnull
 	static <T extends Enum<T>> T get(Class<T> enumType, String altName) {
 		if (!HasEnumAltName.class.isAssignableFrom(enumType)) {
 			throw new IllegalArgumentException("The enum type must implement "+HasEnumAltName.class.getName());
