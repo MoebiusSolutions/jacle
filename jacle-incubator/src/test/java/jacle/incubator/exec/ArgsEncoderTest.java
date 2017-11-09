@@ -1,11 +1,5 @@
 package jacle.incubator.exec;
 
-import jacle.common.exec.JavaArgsBuilder;
-import jacle.common.io.FilesExt;
-import jacle.common.lang.JavaUtil;
-import jacle.commontest.JUnitFiles;
-import jacle.incubator.exec.ProcessLauncher.Result;
-
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -19,6 +13,12 @@ import org.junit.Test;
 
 import com.google.common.base.Joiner;
 
+import jacle.common.exec.JavaArgsBuilder;
+import jacle.common.io.FilesExt;
+import jacle.common.lang.JavaUtil;
+import jacle.commontest.JUnitFiles;
+import jacle.incubator.exec.ProcessLauncher.Result;
+
 public class ArgsEncoderTest {
 
     static final JUnitFiles FILES = new JUnitFiles(JavaUtil.I.getClassName());
@@ -28,8 +28,6 @@ public class ArgsEncoderTest {
      * Enable this during debugging for more output 
      */
     static final boolean SHOW_DEBUG = false;
-
-    private Boolean isWindows;
 
     @Before
     public void setUp() throws Exception {
