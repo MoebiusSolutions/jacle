@@ -43,8 +43,8 @@ public class ArgsEncoderTest {
      */
     @Test
     public void testEncodeWinJavaToJava() throws Exception {
-        ensureWindows();
-        
+        if (!System.getProperty("os.name").startsWith("Windows")) { return; }
+
         // Use ArgsEncoder.I.encodeWinJavaToJava(value) to encode arguments
         ValueEncoder encoder = new ValueEncoder() { public String encode(String value) {
             return ArgsEncoder.I.encodeWinJavaToJava(value);
@@ -283,14 +283,5 @@ public class ArgsEncoderTest {
             builder.append(c);
         }
         return builder.toString();
-    }
-
-    void ensureWindows() {
-        if (isWindows == null) {
-            isWindows = System.getProperty("os.name").startsWith("Windows");
-        }
-        if (!isWindows) {
-            throw new RuntimeException("This test will only function on Windows");
-        }
     }
 }
