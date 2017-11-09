@@ -1,11 +1,5 @@
 package jacle.incubator.exec;
 
-import jacle.common.exec.JavaArgsBuilder;
-import jacle.common.io.RuntimeIOException;
-import jacle.incubator.exec.ArgsEncoderTest.ArgsProcessExecutor;
-import jacle.incubator.exec.ArgsEncoderTest.ValueEncoder;
-import jacle.incubator.exec.ProcessLauncher.Result;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +11,12 @@ import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import jacle.common.exec.JavaArgsBuilder;
+import jacle.common.io.RuntimeIOException;
+import jacle.incubator.exec.ArgsEncoderTest.ArgsProcessExecutor;
+import jacle.incubator.exec.ArgsEncoderTest.ValueEncoder;
+import jacle.incubator.exec.ProcessLauncher.Result;
 
 /**
  * This class simulates the way that Install4j launches child process and
@@ -38,7 +38,7 @@ public class ArgsEncoderInstall4JTest {
 	@Ignore // This doesn't work. It's just included for demonstration purposes.
     @Test
     public void testEncodeForInstall4j() throws Exception {
-        encoderTest.ensureWindows();
+        if (!encoderTest.isWindows()) { return; }
         
         ValueEncoder encoder = new ValueEncoder() { public String encode(String value) {
         	// This doesn't do the job
